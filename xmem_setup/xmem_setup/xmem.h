@@ -8,21 +8,17 @@
 
 #ifndef XMEM_H_
 #define XMEM_H_
+
+#include <stdio.h>
+#include <avr/io.h>
+#include <stdlib.h>
+
 #define BASE_ADDRESS 0x1000
 
-void xmem_init ( void ){
-	MCUCR |= (1 << SRE ); // enable XMEM
-	SFIOR |= (1 << XMM2 ); // mask unused bits
-}
-void xmem_write ( uint8_t data , uint16_t addr ){
-	volatile char * ext_mem = ( char *) BASE_ADDRESS ;
-	ext_mem [ addr ]= data ;
-}
-uint8_t xmem_read ( uint16_t addr ){
-	volatile char * ext_mem = ( char *) BASE_ADDRESS ;
-	uint8_t ret_val = ext_mem [ addr ];
-	return ret_val ;
-}
+void xmem_init ( void );
+
+void xmem_write ( uint8_t data , uint16_t addr );
+uint8_t xmem_read ( uint16_t addr );void SRAM_test(void);
 
 
 #endif /* XRAM_H_ */

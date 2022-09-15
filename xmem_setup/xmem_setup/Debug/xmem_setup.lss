@@ -13,21 +13,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000ddc  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000070  00000000  00000000  00000e18  2**0
+  5 .debug_aranges 00000088  00000000  00000000  00000e18  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000a91  00000000  00000000  00000e88  2**0
+  6 .debug_info   00000b14  00000000  00000000  00000ea0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 0000084d  00000000  00000000  00001919  2**0
+  7 .debug_abbrev 000008b3  00000000  00000000  000019b4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000004ba  00000000  00000000  00002166  2**0
+  8 .debug_line   00000541  00000000  00000000  00002267  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000dc  00000000  00000000  00002620  2**2
+  9 .debug_frame  000000f0  00000000  00000000  000027a8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000047b  00000000  00000000  000026fc  2**0
+ 10 .debug_str    00000484  00000000  00000000  00002898  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000020c  00000000  00000000  00002b77  2**0
+ 11 .debug_loc    0000020c  00000000  00000000  00002d1c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000080  00000000  00000000  00002d83  2**0
+ 12 .debug_ranges 00000088  00000000  00000000  00002f28  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -96,273 +96,272 @@ Disassembly of section .text:
   9c:	a8 38       	cpi	r26, 0x88	; 136
   9e:	b2 07       	cpc	r27, r18
   a0:	e1 f7       	brne	.-8      	; 0x9a <.do_clear_bss_loop>
-  a2:	0e 94 af 00 	call	0x15e	; 0x15e <main>
+  a2:	0e 94 57 00 	call	0xae	; 0xae <main>
   a6:	0c 94 34 06 	jmp	0xc68	; 0xc68 <_exit>
 
 000000aa <__bad_interrupt>:
   aa:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-000000ae <xmem_init>:
+000000ae <main>:
 
-uint8_t xmem_read ( uint16_t addr ){
-	volatile char * ext_mem = ( char *) BASE_ADDRESS ;
-	uint8_t ret_val = ext_mem [ addr ];
-	return ret_val ;
-}
-  ae:	85 b7       	in	r24, 0x35	; 53
-  b0:	80 68       	ori	r24, 0x80	; 128
-  b2:	85 bf       	out	0x35, r24	; 53
-  b4:	80 b7       	in	r24, 0x30	; 48
-  b6:	80 62       	ori	r24, 0x20	; 32
-  b8:	80 bf       	out	0x30, r24	; 48
-  ba:	08 95       	ret
 
-000000bc <SRAM_test>:
-#include "USARTdriver.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-    void SRAM_test(void)
-    {
-  bc:	ef 92       	push	r14
-  be:	ff 92       	push	r15
-  c0:	0f 93       	push	r16
-  c2:	1f 93       	push	r17
-  c4:	cf 93       	push	r28
-  c6:	df 93       	push	r29
-		volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
-        uint16_t ext_ram_size = 0x800;
-        uint16_t write_errors = 0;
-        uint16_t retrieval_errors = 0;
-        printf("Starting SRAM test...\r\n");
-  c8:	8a e0       	ldi	r24, 0x0A	; 10
-  ca:	91 e0       	ldi	r25, 0x01	; 1
-  cc:	0e 94 95 01 	call	0x32a	; 0x32a <puts>
-        // rand() stores some internal state, so calling this function in a loop will
-        // yield different seeds each time (unless srand() is called before this function)
-        uint16_t seed = rand();
-  d0:	0e 94 24 01 	call	0x248	; 0x248 <rand>
-  d4:	7c 01       	movw	r14, r24
-        // Write phase: Immediately check that the correct value was stored
-        srand(seed);
-  d6:	0e 94 29 01 	call	0x252	; 0x252 <srand>
-        for (uint16_t i = 0; i < ext_ram_size; i++) {
-  da:	c0 e0       	ldi	r28, 0x00	; 0
-  dc:	d0 e0       	ldi	r29, 0x00	; 0
-
-    void SRAM_test(void)
-    {
-		volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
-        uint16_t ext_ram_size = 0x800;
-        uint16_t write_errors = 0;
-  de:	00 e0       	ldi	r16, 0x00	; 0
-  e0:	10 e0       	ldi	r17, 0x00	; 0
-        // rand() stores some internal state, so calling this function in a loop will
-        // yield different seeds each time (unless srand() is called before this function)
-        uint16_t seed = rand();
-        // Write phase: Immediately check that the correct value was stored
-        srand(seed);
-        for (uint16_t i = 0; i < ext_ram_size; i++) {
-  e2:	0b c0       	rjmp	.+22     	; 0xfa <SRAM_test+0x3e>
-            uint8_t some_value = rand();
-  e4:	0e 94 24 01 	call	0x248	; 0x248 <rand>
-            ext_ram[i] = some_value;
-  e8:	fe 01       	movw	r30, r28
-  ea:	f8 5e       	subi	r31, 0xE8	; 232
-  ec:	80 83       	st	Z, r24
-            uint8_t retreived_value = ext_ram[i];
-  ee:	90 81       	ld	r25, Z
-            if (retreived_value != some_value) {
-  f0:	89 17       	cp	r24, r25
-  f2:	11 f0       	breq	.+4      	; 0xf8 <SRAM_test+0x3c>
-                //printf("Write phase error: ext_ram[%4d] = %02X (should be %02X)\r\n", i, retreived_value, some_value);
-                write_errors++;
-  f4:	0f 5f       	subi	r16, 0xFF	; 255
-  f6:	1f 4f       	sbci	r17, 0xFF	; 255
-        // rand() stores some internal state, so calling this function in a loop will
-        // yield different seeds each time (unless srand() is called before this function)
-        uint16_t seed = rand();
-        // Write phase: Immediately check that the correct value was stored
-        srand(seed);
-        for (uint16_t i = 0; i < ext_ram_size; i++) {
-  f8:	21 96       	adiw	r28, 0x01	; 1
-  fa:	c1 15       	cp	r28, r1
-  fc:	88 e0       	ldi	r24, 0x08	; 8
-  fe:	d8 07       	cpc	r29, r24
- 100:	88 f3       	brcs	.-30     	; 0xe4 <SRAM_test+0x28>
-                //printf("Write phase error: ext_ram[%4d] = %02X (should be %02X)\r\n", i, retreived_value, some_value);
-                write_errors++;
-            }
-        }
-        // Retrieval phase: Check that no values were changed during or after the write phase
-        srand(seed);
- 102:	c7 01       	movw	r24, r14
- 104:	0e 94 29 01 	call	0x252	; 0x252 <srand>
-        // reset the PRNG to the state it had before the write phase
-        for (uint16_t i = 0; i < ext_ram_size; i++) {
- 108:	c0 e0       	ldi	r28, 0x00	; 0
- 10a:	d0 e0       	ldi	r29, 0x00	; 0
-    void SRAM_test(void)
-    {
-		volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
-        uint16_t ext_ram_size = 0x800;
-        uint16_t write_errors = 0;
-        uint16_t retrieval_errors = 0;
- 10c:	e1 2c       	mov	r14, r1
- 10e:	f1 2c       	mov	r15, r1
-            }
-        }
-        // Retrieval phase: Check that no values were changed during or after the write phase
-        srand(seed);
-        // reset the PRNG to the state it had before the write phase
-        for (uint16_t i = 0; i < ext_ram_size; i++) {
- 110:	0b c0       	rjmp	.+22     	; 0x128 <SRAM_test+0x6c>
-            uint8_t some_value = rand();
- 112:	0e 94 24 01 	call	0x248	; 0x248 <rand>
-            uint8_t retreived_value = ext_ram[i];
- 116:	fe 01       	movw	r30, r28
- 118:	f8 5e       	subi	r31, 0xE8	; 232
- 11a:	90 81       	ld	r25, Z
-            if (retreived_value != some_value) {
- 11c:	89 17       	cp	r24, r25
- 11e:	19 f0       	breq	.+6      	; 0x126 <SRAM_test+0x6a>
-                //printf("Retrieval phase error: ext_ram[%4d] = %02X (should be %02X)\r\n", i, retreived_value, some_value);
-                retrieval_errors++;
- 120:	8f ef       	ldi	r24, 0xFF	; 255
- 122:	e8 1a       	sub	r14, r24
- 124:	f8 0a       	sbc	r15, r24
-            }
-        }
-        // Retrieval phase: Check that no values were changed during or after the write phase
-        srand(seed);
-        // reset the PRNG to the state it had before the write phase
-        for (uint16_t i = 0; i < ext_ram_size; i++) {
- 126:	21 96       	adiw	r28, 0x01	; 1
- 128:	c1 15       	cp	r28, r1
- 12a:	88 e0       	ldi	r24, 0x08	; 8
- 12c:	d8 07       	cpc	r29, r24
- 12e:	88 f3       	brcs	.-30     	; 0x112 <SRAM_test+0x56>
-            if (retreived_value != some_value) {
-                //printf("Retrieval phase error: ext_ram[%4d] = %02X (should be %02X)\r\n", i, retreived_value, some_value);
-                retrieval_errors++;
-            }
-        }
-        printf("SRAM test completed with \r\n%4d errors in write phase and \r\n%4d errors in retrieval phase\r\n\r\n", write_errors, retrieval_errors);
- 130:	ff 92       	push	r15
- 132:	ef 92       	push	r14
- 134:	1f 93       	push	r17
- 136:	0f 93       	push	r16
- 138:	81 e2       	ldi	r24, 0x21	; 33
- 13a:	91 e0       	ldi	r25, 0x01	; 1
- 13c:	9f 93       	push	r25
- 13e:	8f 93       	push	r24
- 140:	0e 94 7f 01 	call	0x2fe	; 0x2fe <printf>
-}
- 144:	0f 90       	pop	r0
- 146:	0f 90       	pop	r0
- 148:	0f 90       	pop	r0
- 14a:	0f 90       	pop	r0
- 14c:	0f 90       	pop	r0
- 14e:	0f 90       	pop	r0
- 150:	df 91       	pop	r29
- 152:	cf 91       	pop	r28
- 154:	1f 91       	pop	r17
- 156:	0f 91       	pop	r16
- 158:	ff 90       	pop	r15
- 15a:	ef 90       	pop	r14
- 15c:	08 95       	ret
-
-0000015e <main>:
-
+    
 int main(void)
 {
 	USART_Init( MYUBRR );
- 15e:	8f e1       	ldi	r24, 0x1F	; 31
- 160:	90 e0       	ldi	r25, 0x00	; 0
- 162:	0e 94 cb 00 	call	0x196	; 0x196 <USART_Init>
+  ae:	8f e1       	ldi	r24, 0x1F	; 31
+  b0:	90 e0       	ldi	r25, 0x00	; 0
+  b2:	0e 94 73 00 	call	0xe6	; 0xe6 <USART_Init>
 	
 	xmem_init();
- 166:	0e 94 57 00 	call	0xae	; 0xae <xmem_init>
+  b6:	0e 94 80 00 	call	0x100	; 0x100 <xmem_init>
 	SRAM_test();
- 16a:	0e 94 5e 00 	call	0xbc	; 0xbc <SRAM_test>
+  ba:	0e 94 87 00 	call	0x10e	; 0x10e <SRAM_test>
 
     while (1) 
     { 
 		SRAM_test();
- 16e:	0e 94 5e 00 	call	0xbc	; 0xbc <SRAM_test>
+  be:	0e 94 87 00 	call	0x10e	; 0x10e <SRAM_test>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 172:	2f ef       	ldi	r18, 0xFF	; 255
- 174:	8f ef       	ldi	r24, 0xFF	; 255
- 176:	9e e0       	ldi	r25, 0x0E	; 14
- 178:	21 50       	subi	r18, 0x01	; 1
- 17a:	80 40       	sbci	r24, 0x00	; 0
- 17c:	90 40       	sbci	r25, 0x00	; 0
- 17e:	e1 f7       	brne	.-8      	; 0x178 <main+0x1a>
- 180:	00 c0       	rjmp	.+0      	; 0x182 <main+0x24>
- 182:	00 00       	nop
- 184:	f4 cf       	rjmp	.-24     	; 0x16e <main+0x10>
+  c2:	2f ef       	ldi	r18, 0xFF	; 255
+  c4:	8f ef       	ldi	r24, 0xFF	; 255
+  c6:	9e e0       	ldi	r25, 0x0E	; 14
+  c8:	21 50       	subi	r18, 0x01	; 1
+  ca:	80 40       	sbci	r24, 0x00	; 0
+  cc:	90 40       	sbci	r25, 0x00	; 0
+  ce:	e1 f7       	brne	.-8      	; 0xc8 <main+0x1a>
+  d0:	00 c0       	rjmp	.+0      	; 0xd2 <main+0x24>
+  d2:	00 00       	nop
+  d4:	f4 cf       	rjmp	.-24     	; 0xbe <main+0x10>
 
-00000186 <USART_Transmit>:
+000000d6 <USART_Transmit>:
 }
 
 void USART_Transmit( unsigned char data )
 {
 	/* Wait for empty transmit buffer */
 	while ( !( UCSR0A & (1<<UDRE0)) )
- 186:	5d 9b       	sbis	0x0b, 5	; 11
- 188:	fe cf       	rjmp	.-4      	; 0x186 <USART_Transmit>
+  d6:	5d 9b       	sbis	0x0b, 5	; 11
+  d8:	fe cf       	rjmp	.-4      	; 0xd6 <USART_Transmit>
 	;
 	/* Put data into buffer, sends the data */
 	UDR0 = data;
- 18a:	8c b9       	out	0x0c, r24	; 12
- 18c:	08 95       	ret
+  da:	8c b9       	out	0x0c, r24	; 12
+  dc:	08 95       	ret
 
-0000018e <USART_Receive>:
+000000de <USART_Receive>:
 }
 
 unsigned char USART_Receive( void )
 {
 	/* Wait for data to be received */
 	while ( !(UCSR0A & (1<<RXC0)) )
- 18e:	5f 9b       	sbis	0x0b, 7	; 11
- 190:	fe cf       	rjmp	.-4      	; 0x18e <USART_Receive>
+  de:	5f 9b       	sbis	0x0b, 7	; 11
+  e0:	fe cf       	rjmp	.-4      	; 0xde <USART_Receive>
 	;
 	/* Get and return received data from buffer */
 	return UDR0;
- 192:	8c b1       	in	r24, 0x0c	; 12
+  e2:	8c b1       	in	r24, 0x0c	; 12
 }
- 194:	08 95       	ret
+  e4:	08 95       	ret
 
-00000196 <USART_Init>:
+000000e6 <USART_Init>:
 
 
 void USART_Init( unsigned int ubrr )
 {
 	/* Set baud rate */
 	UBRR0H = (unsigned char)(ubrr>>8);
- 196:	90 bd       	out	0x20, r25	; 32
+  e6:	90 bd       	out	0x20, r25	; 32
 	UBRR0L = (unsigned char)ubrr;
- 198:	89 b9       	out	0x09, r24	; 9
+  e8:	89 b9       	out	0x09, r24	; 9
 	/* Enable receiver and transmitter */
 	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
- 19a:	88 e1       	ldi	r24, 0x18	; 24
- 19c:	8a b9       	out	0x0a, r24	; 10
+  ea:	88 e1       	ldi	r24, 0x18	; 24
+  ec:	8a b9       	out	0x0a, r24	; 10
 	/* Set frame format: 8data, 2stop bit */
 	UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);
- 19e:	8e e8       	ldi	r24, 0x8E	; 142
- 1a0:	80 bd       	out	0x20, r24	; 32
+  ee:	8e e8       	ldi	r24, 0x8E	; 142
+  f0:	80 bd       	out	0x20, r24	; 32
 	
 	fdevopen(USART_Transmit, USART_Receive);
- 1a2:	67 ec       	ldi	r22, 0xC7	; 199
- 1a4:	70 e0       	ldi	r23, 0x00	; 0
- 1a6:	83 ec       	ldi	r24, 0xC3	; 195
- 1a8:	90 e0       	ldi	r25, 0x00	; 0
- 1aa:	0e 94 34 01 	call	0x268	; 0x268 <fdevopen>
+  f2:	6f e6       	ldi	r22, 0x6F	; 111
+  f4:	70 e0       	ldi	r23, 0x00	; 0
+  f6:	8b e6       	ldi	r24, 0x6B	; 107
+  f8:	90 e0       	ldi	r25, 0x00	; 0
+  fa:	0e 94 34 01 	call	0x268	; 0x268 <fdevopen>
+  fe:	08 95       	ret
+
+00000100 <xmem_init>:
+
+uint8_t xmem_read ( uint16_t addr ){
+	volatile char * ext_mem = ( char *) BASE_ADDRESS ;
+	uint8_t ret_val = ext_mem [ addr ];
+	return ret_val ;
+}
+ 100:	85 b7       	in	r24, 0x35	; 53
+ 102:	80 68       	ori	r24, 0x80	; 128
+ 104:	85 bf       	out	0x35, r24	; 53
+ 106:	80 b7       	in	r24, 0x30	; 48
+ 108:	80 62       	ori	r24, 0x20	; 32
+ 10a:	80 bf       	out	0x30, r24	; 48
+ 10c:	08 95       	ret
+
+0000010e <SRAM_test>:
+
+void SRAM_test(void)
+{
+ 10e:	ef 92       	push	r14
+ 110:	ff 92       	push	r15
+ 112:	0f 93       	push	r16
+ 114:	1f 93       	push	r17
+ 116:	cf 93       	push	r28
+ 118:	df 93       	push	r29
+	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
+	uint16_t ext_ram_size = 0x800;
+	uint16_t write_errors = 0;
+	uint16_t retrieval_errors = 0;
+	printf("Starting SRAM test...\r\n");
+ 11a:	8a e0       	ldi	r24, 0x0A	; 10
+ 11c:	91 e0       	ldi	r25, 0x01	; 1
+ 11e:	0e 94 95 01 	call	0x32a	; 0x32a <puts>
+	// rand() stores some internal state, so calling this function in a loop will
+	// yield different seeds each time (unless srand() is called before this function)
+	uint16_t seed = rand();
+ 122:	0e 94 24 01 	call	0x248	; 0x248 <rand>
+ 126:	7c 01       	movw	r14, r24
+	// Write phase: Immediately check that the correct value was stored
+	srand(seed);
+ 128:	0e 94 29 01 	call	0x252	; 0x252 <srand>
+	for (uint16_t i = 0; i < ext_ram_size; i++) {
+ 12c:	c0 e0       	ldi	r28, 0x00	; 0
+ 12e:	d0 e0       	ldi	r29, 0x00	; 0
+
+void SRAM_test(void)
+{
+	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
+	uint16_t ext_ram_size = 0x800;
+	uint16_t write_errors = 0;
+ 130:	00 e0       	ldi	r16, 0x00	; 0
+ 132:	10 e0       	ldi	r17, 0x00	; 0
+	// rand() stores some internal state, so calling this function in a loop will
+	// yield different seeds each time (unless srand() is called before this function)
+	uint16_t seed = rand();
+	// Write phase: Immediately check that the correct value was stored
+	srand(seed);
+	for (uint16_t i = 0; i < ext_ram_size; i++) {
+ 134:	0b c0       	rjmp	.+22     	; 0x14c <SRAM_test+0x3e>
+		uint8_t some_value = rand();
+ 136:	0e 94 24 01 	call	0x248	; 0x248 <rand>
+		ext_ram[i] = some_value;
+ 13a:	fe 01       	movw	r30, r28
+ 13c:	f8 5e       	subi	r31, 0xE8	; 232
+ 13e:	80 83       	st	Z, r24
+		uint8_t retreived_value = ext_ram[i];
+ 140:	90 81       	ld	r25, Z
+		if (retreived_value != some_value) {
+ 142:	89 17       	cp	r24, r25
+ 144:	11 f0       	breq	.+4      	; 0x14a <SRAM_test+0x3c>
+			//printf("Write phase error: ext_ram[%4d] = %02X (should be %02X)\r\n", i, retreived_value, some_value);
+			write_errors++;
+ 146:	0f 5f       	subi	r16, 0xFF	; 255
+ 148:	1f 4f       	sbci	r17, 0xFF	; 255
+	// rand() stores some internal state, so calling this function in a loop will
+	// yield different seeds each time (unless srand() is called before this function)
+	uint16_t seed = rand();
+	// Write phase: Immediately check that the correct value was stored
+	srand(seed);
+	for (uint16_t i = 0; i < ext_ram_size; i++) {
+ 14a:	21 96       	adiw	r28, 0x01	; 1
+ 14c:	c1 15       	cp	r28, r1
+ 14e:	88 e0       	ldi	r24, 0x08	; 8
+ 150:	d8 07       	cpc	r29, r24
+ 152:	88 f3       	brcs	.-30     	; 0x136 <SRAM_test+0x28>
+			//printf("Write phase error: ext_ram[%4d] = %02X (should be %02X)\r\n", i, retreived_value, some_value);
+			write_errors++;
+		}
+	}
+	// Retrieval phase: Check that no values were changed during or after the write phase
+	srand(seed);
+ 154:	c7 01       	movw	r24, r14
+ 156:	0e 94 29 01 	call	0x252	; 0x252 <srand>
+	// reset the PRNG to the state it had before the write phase
+	for (uint16_t i = 0; i < ext_ram_size; i++) {
+ 15a:	c0 e0       	ldi	r28, 0x00	; 0
+ 15c:	d0 e0       	ldi	r29, 0x00	; 0
+void SRAM_test(void)
+{
+	volatile char *ext_ram = (char *) 0x1800; // Start address for the SRAM
+	uint16_t ext_ram_size = 0x800;
+	uint16_t write_errors = 0;
+	uint16_t retrieval_errors = 0;
+ 15e:	e1 2c       	mov	r14, r1
+ 160:	f1 2c       	mov	r15, r1
+		}
+	}
+	// Retrieval phase: Check that no values were changed during or after the write phase
+	srand(seed);
+	// reset the PRNG to the state it had before the write phase
+	for (uint16_t i = 0; i < ext_ram_size; i++) {
+ 162:	0b c0       	rjmp	.+22     	; 0x17a <SRAM_test+0x6c>
+		uint8_t some_value = rand();
+ 164:	0e 94 24 01 	call	0x248	; 0x248 <rand>
+		uint8_t retreived_value = ext_ram[i];
+ 168:	fe 01       	movw	r30, r28
+ 16a:	f8 5e       	subi	r31, 0xE8	; 232
+ 16c:	90 81       	ld	r25, Z
+		if (retreived_value != some_value) {
+ 16e:	89 17       	cp	r24, r25
+ 170:	19 f0       	breq	.+6      	; 0x178 <SRAM_test+0x6a>
+			//printf("Retrieval phase error: ext_ram[%4d] = %02X (should be %02X)\r\n", i, retreived_value, some_value);
+			retrieval_errors++;
+ 172:	8f ef       	ldi	r24, 0xFF	; 255
+ 174:	e8 1a       	sub	r14, r24
+ 176:	f8 0a       	sbc	r15, r24
+		}
+	}
+	// Retrieval phase: Check that no values were changed during or after the write phase
+	srand(seed);
+	// reset the PRNG to the state it had before the write phase
+	for (uint16_t i = 0; i < ext_ram_size; i++) {
+ 178:	21 96       	adiw	r28, 0x01	; 1
+ 17a:	c1 15       	cp	r28, r1
+ 17c:	88 e0       	ldi	r24, 0x08	; 8
+ 17e:	d8 07       	cpc	r29, r24
+ 180:	88 f3       	brcs	.-30     	; 0x164 <SRAM_test+0x56>
+		if (retreived_value != some_value) {
+			//printf("Retrieval phase error: ext_ram[%4d] = %02X (should be %02X)\r\n", i, retreived_value, some_value);
+			retrieval_errors++;
+		}
+	}
+	printf("SRAM test completed with \r\n%4d errors in write phase and \r\n%4d errors in retrieval phase\r\n\r\n", write_errors, retrieval_errors);
+ 182:	ff 92       	push	r15
+ 184:	ef 92       	push	r14
+ 186:	1f 93       	push	r17
+ 188:	0f 93       	push	r16
+ 18a:	81 e2       	ldi	r24, 0x21	; 33
+ 18c:	91 e0       	ldi	r25, 0x01	; 1
+ 18e:	9f 93       	push	r25
+ 190:	8f 93       	push	r24
+ 192:	0e 94 7f 01 	call	0x2fe	; 0x2fe <printf>
+}
+ 196:	0f 90       	pop	r0
+ 198:	0f 90       	pop	r0
+ 19a:	0f 90       	pop	r0
+ 19c:	0f 90       	pop	r0
+ 19e:	0f 90       	pop	r0
+ 1a0:	0f 90       	pop	r0
+ 1a2:	df 91       	pop	r29
+ 1a4:	cf 91       	pop	r28
+ 1a6:	1f 91       	pop	r17
+ 1a8:	0f 91       	pop	r16
+ 1aa:	ff 90       	pop	r15
+ 1ac:	ef 90       	pop	r14
  1ae:	08 95       	ret
 
 000001b0 <do_rand>:

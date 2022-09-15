@@ -145,6 +145,9 @@
     <Compile Include="USARTdriver.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="xmem.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="xmem.h">
       <SubType>compile</SubType>
     </Compile>
