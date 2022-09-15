@@ -16,13 +16,12 @@ int main(void)
 	USART_Init( MYUBRR );
 	
 	xmem_init();
-	SRAM_test();
-
-    while (1) 
-    { 
-		SRAM_test();
-		_delay_ms(1000);
-
-    }
+	adc_init();
+	
+	while(1){
+		uint8_t x_dir = adc_read(2);
+		uint8_t y_dir = adc_read(3);
+		printf("X: %u, Y: %u \n\r", x_dir, y_dir);
+	}
 }
  

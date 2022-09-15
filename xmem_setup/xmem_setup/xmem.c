@@ -11,6 +11,62 @@ void xmem_init ( void ){
 	MCUCR |= (1 << SRE ); // enable XMEM
 	SFIOR |= (1 << XMM2 ); // mask unused bits
 }
+void adc_init ( void ){
+
+	DDRD |= (1<<DDD5); // Set Data Direction PD5 to Write (output)
+	DDRD |= (0<<DDD4); // Set Data Direction PD4 to Read (input). Used for BUSY from ADC
+	
+	TCCR1B |= (1<<WGM12 | 0<<WGM13); // Set CTC mode
+	TCCR1A |= (0<<WGM10 | 0<<WGM11); // Set CTC mode
+	
+	TCCR1B |= (1<<CS10 | 0<<CS11 | 0<<CS12); //Clk frequency equal to system clock
+
+	TCCR1A |= (0<<COM1A1 | 1<<COM1A0); // Set 0C1A to toggle on match
+	
+	OCR1A = 0x0; // Set compare to 0. Timer reset on compare equal, will always stay at 0, toggle every cycle (?)
+
+}
+
+void adc_sample( void ){
+	
+	volatile char * ext_mem = ( char *) 0x1400;
+	ext_mem [ 0 ] = 0x01;
+}
+
+uint8_t adc_read ( uint8_t channel ){
+	
+	adc_sample();
+	
+	while((PIND & 1<<PIND4) == 0 ){}// While BUSY is low, spin here
+
+	//_delay_ms(100);
+	volatile char * ext_mem = ( char *) 0x1400 ;
+	uint8_t ch_0 = ext_mem [ 0 ];
+	uint8_t ch_1 = ext_mem [ 0 ];
+	uint8_t ch_2 = ext_mem [ 0 ];
+	uint8_t ch_3 = ext_mem [ 0 ];
+	
+	switch (channel)
+	{
+		case 0:
+			return ch_0;
+		
+		case 1:
+			return ch_1;
+
+		case 2:
+			return ch_2;
+
+		case 3:
+			return ch_3;
+
+		default:
+			return 0;
+	}
+}
+
+void adc_calibrate( void );
+
 void xmem_write ( uint8_t data , uint16_t addr ){
 	volatile char * ext_mem = ( char *) BASE_ADDRESS ;
 	ext_mem [ addr ]= data ;
