@@ -1,17 +1,17 @@
 Archive member included to satisfy reference by file (symbol)
 
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
-                              xmem.o (__divmodhi4)
+                              ADCdriver.o (__divmodhi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
                               C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega162/avr5/crtatmega162.o (exit)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_copy_data.o)
-                              main.o (__do_copy_data)
+                              ADCdriver.o (__do_copy_data)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_clear_bss.o)
-                              xmem.o (__do_clear_bss)
+                              ADCdriver.o (__do_clear_bss)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodhi4.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o) (__udivmodhi4)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(rand.o)
-                              xmem.o (rand)
+                              XMEMdriver.o (rand)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(fdevopen.o)
                               USARTdriver.o (fdevopen)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(iob.o)
@@ -19,7 +19,7 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(printf.o)
                               main.o (printf)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(puts.o)
-                              xmem.o (puts)
+                              XMEMdriver.o (puts)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
                               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(printf.o) (vfprintf)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(calloc.o)
@@ -60,33 +60,36 @@ __brkval            0x2               c:/program files (x86)/atmel/studio/7.0/to
 __flp               0x2               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(malloc.o)
 __iob               0x6               c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(iob.o)
 posistion_percentage
-                    0x2               xmem.o
+                    0x2               ADCdriver.o
 
 Discarded input sections
 
  .data          0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega162/avr5/crtatmega162.o
  .bss           0x00000000        0x0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega162/avr5/crtatmega162.o
+ .text          0x00000000        0x0 ADCdriver.o
+ .data          0x00000000        0x0 ADCdriver.o
+ .bss           0x00000000        0x0 ADCdriver.o
+ .text.pos_left_slider
+                0x00000000       0x1a ADCdriver.o
+ .text.pos_right_slider
+                0x00000000       0x1a ADCdriver.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
  .text          0x00000000        0x0 USARTdriver.o
  .data          0x00000000        0x0 USARTdriver.o
  .bss           0x00000000        0x0 USARTdriver.o
- .text          0x00000000        0x0 xmem.o
- .data          0x00000000        0x0 xmem.o
- .bss           0x00000000        0x0 xmem.o
+ .text          0x00000000        0x0 XMEMdriver.o
+ .data          0x00000000        0x0 XMEMdriver.o
+ .bss           0x00000000        0x0 XMEMdriver.o
  .text.xmem_write
-                0x00000000        0x8 xmem.o
+                0x00000000        0x8 XMEMdriver.o
  .text.xmem_read
-                0x00000000        0x8 xmem.o
- .text.pos_left_slider
-                0x00000000       0x1a xmem.o
- .text.pos_right_slider
-                0x00000000       0x1a xmem.o
+                0x00000000        0x8 XMEMdriver.o
  .rodata.str1.1
-                0x00000000       0x74 xmem.o
+                0x00000000       0x74 XMEMdriver.o
  .text.SRAM_test
-                0x00000000       0xa2 xmem.o
+                0x00000000       0xa2 XMEMdriver.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
@@ -348,9 +351,10 @@ Linker script and memory map
 
 Address of section .data set to 0x800100
 LOAD C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega162/avr5/crtatmega162.o
+LOAD ADCdriver.o
 LOAD main.o
 LOAD USARTdriver.o
-LOAD xmem.o
+LOAD XMEMdriver.o
 START GROUP
 LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a
 END GROUP
@@ -549,38 +553,38 @@ END GROUP
                 0x000000aa                __vector_20
                 0x000000ae                . = ALIGN (0x2)
  *(.text.*)
- .text.main     0x000000ae       0x42 main.o
-                0x000000ae                main
- .text.USART_Transmit
-                0x000000f0        0x8 USARTdriver.o
-                0x000000f0                USART_Transmit
- .text.USART_Receive
-                0x000000f8        0x8 USARTdriver.o
-                0x000000f8                USART_Receive
- .text.USART_Init
-                0x00000100       0x1a USARTdriver.o
-                0x00000100                USART_Init
- .text.xmem_init
-                0x0000011a        0xe xmem.o
-                0x0000011a                xmem_init
- .text.adc_init
-                0x00000128       0x26 xmem.o
-                0x00000128                adc_init
  .text.adc_sample
-                0x0000014e        0x8 xmem.o
-                0x0000014e                adc_sample
+                0x000000ae        0x8 ADCdriver.o
+                0x000000ae                adc_sample
  .text.adc_read
-                0x00000156       0x38 xmem.o
-                0x00000156                adc_read
+                0x000000b6       0x38 ADCdriver.o
+                0x000000b6                adc_read
  .text.adc_calibrate
-                0x0000018e       0x5c xmem.o
-                0x0000018e                adc_calibrate
+                0x000000ee       0x5c ADCdriver.o
+                0x000000ee                adc_calibrate
  .text.pos_read
-                0x000001ea       0xcc xmem.o
-                0x000001ea                pos_read
+                0x0000014a       0xcc ADCdriver.o
+                0x0000014a                pos_read
  .text.direction_read
-                0x000002b6       0x62 xmem.o
-                0x000002b6                direction_read
+                0x00000216       0x62 ADCdriver.o
+                0x00000216                direction_read
+ .text.main     0x00000278       0x42 main.o
+                0x00000278                main
+ .text.USART_Transmit
+                0x000002ba        0x8 USARTdriver.o
+                0x000002ba                USART_Transmit
+ .text.USART_Receive
+                0x000002c2        0x8 USARTdriver.o
+                0x000002c2                USART_Receive
+ .text.USART_Init
+                0x000002ca       0x1a USARTdriver.o
+                0x000002ca                USART_Init
+ .text.xmem_init
+                0x000002e4        0xe XMEMdriver.o
+                0x000002e4                xmem_init
+ .text.adc_init
+                0x000002f2       0x26 XMEMdriver.o
+                0x000002f2                adc_init
  .text.libgcc.div
                 0x00000318       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_divmodhi4.o)
                 0x00000318                _div
@@ -661,10 +665,10 @@ END GROUP
                 0x00800104                __malloc_margin
  *(.data*)
  .data.m_min_y_value
-                0x00800106        0x1 xmem.o
+                0x00800106        0x1 ADCdriver.o
                 0x00800106                m_min_y_value
  .data.m_min_x_value
-                0x00800107        0x1 xmem.o
+                0x00800107        0x1 ADCdriver.o
                 0x00800107                m_min_x_value
  *(.gnu.linkonce.d*)
  *(.rodata)
@@ -681,19 +685,19 @@ END GROUP
  *(.bss)
  *(.bss*)
  .bss.m_middle_y_value
-                0x0080010e        0x1 xmem.o
+                0x0080010e        0x1 ADCdriver.o
                 0x0080010e                m_middle_y_value
  .bss.m_max_y_value
-                0x0080010f        0x1 xmem.o
+                0x0080010f        0x1 ADCdriver.o
                 0x0080010f                m_max_y_value
  .bss.m_middle_x_value
-                0x00800110        0x1 xmem.o
+                0x00800110        0x1 ADCdriver.o
                 0x00800110                m_middle_x_value
  .bss.m_max_x_value
-                0x00800111        0x1 xmem.o
+                0x00800111        0x1 ADCdriver.o
                 0x00800111                m_max_x_value
  *(COMMON)
- COMMON         0x00800112        0x2 xmem.o
+ COMMON         0x00800112        0x2 ADCdriver.o
                 0x00800112                posistion_percentage
  COMMON         0x00800114        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(iob.o)
                 0x00800114                __iob
@@ -750,10 +754,11 @@ END GROUP
 
 .comment        0x00000000       0x5c
  *(.comment)
- .comment       0x00000000       0x30 main.o
+ .comment       0x00000000       0x30 ADCdriver.o
                                  0x31 (size before relaxing)
+ .comment       0x00000030       0x31 main.o
  .comment       0x00000030       0x31 USARTdriver.o
- .comment       0x00000030       0x31 xmem.o
+ .comment       0x00000030       0x31 XMEMdriver.o
  .comment       0x00000030       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(fdevopen.o)
  .comment       0x00000030       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(iob.o)
  .comment       0x00000030       0x31 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libc.a(printf.o)
@@ -783,60 +788,69 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0xc8
+.debug_aranges  0x00000000       0xe0
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x20 main.o
+                0x00000000       0x50 ADCdriver.o
  .debug_aranges
-                0x00000020       0x30 USARTdriver.o
+                0x00000050       0x20 main.o
  .debug_aranges
-                0x00000050       0x78 xmem.o
+                0x00000070       0x30 USARTdriver.o
+ .debug_aranges
+                0x000000a0       0x40 XMEMdriver.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xefa
+.debug_info     0x00000000      0xf79
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5d0 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega162/avr5/crtatmega162.o
- .debug_info    0x000005d0      0x24a main.o
- .debug_info    0x0000081a      0x11f USARTdriver.o
- .debug_info    0x00000939      0x5c1 xmem.o
+ .debug_info    0x000005d0      0x36e ADCdriver.o
+ .debug_info    0x0000093e      0x24a main.o
+ .debug_info    0x00000b88      0x11f USARTdriver.o
+ .debug_info    0x00000ca7      0x2d2 XMEMdriver.o
 
-.debug_abbrev   0x00000000      0x9b7
+.debug_abbrev   0x00000000      0xab0
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x580 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega162/avr5/crtatmega162.o
- .debug_abbrev  0x00000580      0x170 main.o
- .debug_abbrev  0x000006f0       0xcc USARTdriver.o
- .debug_abbrev  0x000007bc      0x1fb xmem.o
+ .debug_abbrev  0x00000580      0x18c ADCdriver.o
+ .debug_abbrev  0x0000070c      0x170 main.o
+ .debug_abbrev  0x0000087c       0xcc USARTdriver.o
+ .debug_abbrev  0x00000948      0x168 XMEMdriver.o
 
-.debug_line     0x00000000      0x77e
+.debug_line     0x00000000      0x82a
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x140 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega162/avr5/crtatmega162.o
- .debug_line    0x00000140      0x16e main.o
- .debug_line    0x000002ae      0x104 USARTdriver.o
- .debug_line    0x000003b2      0x3cc xmem.o
+ .debug_line    0x00000140      0x26b ADCdriver.o
+ .debug_line    0x000003ab      0x183 main.o
+ .debug_line    0x0000052e      0x104 USARTdriver.o
+ .debug_line    0x00000632      0x1f8 XMEMdriver.o
 
-.debug_frame    0x00000000      0x19c
+.debug_frame    0x00000000      0x1b0
  *(.debug_frame)
- .debug_frame   0x00000000       0x34 main.o
- .debug_frame   0x00000034       0x44 USARTdriver.o
- .debug_frame   0x00000078      0x124 xmem.o
+ .debug_frame   0x00000000       0xa0 ADCdriver.o
+ .debug_frame   0x000000a0       0x34 main.o
+ .debug_frame   0x000000d4       0x44 USARTdriver.o
+ .debug_frame   0x00000118       0x98 XMEMdriver.o
 
-.debug_str      0x00000000      0x60b
+.debug_str      0x00000000      0x622
  *(.debug_str)
  .debug_str     0x00000000      0x1f6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega162/avr5/crtatmega162.o
- .debug_str     0x000001f6      0x1ff main.o
+ .debug_str     0x000001f6      0x278 ADCdriver.o
+                                0x2c0 (size before relaxing)
+ .debug_str     0x0000046e       0x86 main.o
                                 0x23f (size before relaxing)
- .debug_str     0x000003f5       0x87 USARTdriver.o
+ .debug_str     0x000004f4       0x7f USARTdriver.o
                                 0x1a4 (size before relaxing)
- .debug_str     0x0000047c      0x18f xmem.o
-                                0x381 (size before relaxing)
+ .debug_str     0x00000573       0xaf XMEMdriver.o
+                                0x23e (size before relaxing)
 
 .debug_loc      0x00000000      0x43b
  *(.debug_loc)
- .debug_loc     0x00000000       0xc8 main.o
- .debug_loc     0x000000c8       0x26 USARTdriver.o
- .debug_loc     0x000000ee      0x34d xmem.o
+ .debug_loc     0x00000000      0x167 ADCdriver.o
+ .debug_loc     0x00000167       0xc8 main.o
+ .debug_loc     0x0000022f       0x26 USARTdriver.o
+ .debug_loc     0x00000255      0x1e6 XMEMdriver.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -856,11 +870,12 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0xc8
+.debug_ranges   0x00000000       0xd0
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x10 main.o
- .debug_ranges  0x00000010       0x20 USARTdriver.o
- .debug_ranges  0x00000030       0x98 xmem.o
+ .debug_ranges  0x00000000       0x40 ADCdriver.o
+ .debug_ranges  0x00000040       0x10 main.o
+ .debug_ranges  0x00000050       0x20 USARTdriver.o
+ .debug_ranges  0x00000070       0x60 XMEMdriver.o
 
 .debug_macro
  *(.debug_macro)

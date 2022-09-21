@@ -136,6 +136,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ADCdriver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ADCdriver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
@@ -145,10 +151,10 @@
     <Compile Include="USARTdriver.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="xmem.c">
+    <Compile Include="XMEMdriver.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="xmem.h">
+    <Compile Include="XMEMdriver.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

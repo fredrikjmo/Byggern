@@ -8,7 +8,8 @@
 #define F_CPU 4.9152E6
 
 #include <util/delay.h>
-#include "xmem.h"
+#include "XMEMdriver.h"
+#include "ADCdriver.h"
 #include "USARTdriver.h"
 
 int main(void)

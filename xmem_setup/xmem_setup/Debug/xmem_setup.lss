@@ -13,21 +13,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000d44  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 000000c8  00000000  00000000  00000d80  2**0
+  5 .debug_aranges 000000e0  00000000  00000000  00000d80  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000efa  00000000  00000000  00000e48  2**0
+  6 .debug_info   00000f79  00000000  00000000  00000e60  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000009b7  00000000  00000000  00001d42  2**0
+  7 .debug_abbrev 00000ab0  00000000  00000000  00001dd9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000077e  00000000  00000000  000026f9  2**0
+  8 .debug_line   0000082a  00000000  00000000  00002889  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  0000019c  00000000  00000000  00002e78  2**2
+  9 .debug_frame  000001b0  00000000  00000000  000030b4  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000060b  00000000  00000000  00003014  2**0
+ 10 .debug_str    00000622  00000000  00000000  00003264  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000043b  00000000  00000000  0000361f  2**0
+ 11 .debug_loc    0000043b  00000000  00000000  00003886  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000000c8  00000000  00000000  00003a5a  2**0
+ 12 .debug_ranges 000000d0  00000000  00000000  00003cc1  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -96,377 +96,470 @@ Disassembly of section .text:
   9c:	ae 31       	cpi	r26, 0x1E	; 30
   9e:	b2 07       	cpc	r27, r18
   a0:	e1 f7       	brne	.-8      	; 0x9a <.do_clear_bss_loop>
-  a2:	0e 94 57 00 	call	0xae	; 0xae <main>
+  a2:	0e 94 3c 01 	call	0x278	; 0x278 <main>
   a6:	0c 94 21 06 	jmp	0xc42	; 0xc42 <_exit>
 
 000000aa <__bad_interrupt>:
   aa:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-000000ae <main>:
-#include "xmem.h"
+000000ae <adc_sample>:
+pos_p posistion_percentage;
+
+void adc_sample( void ){
+	
+	volatile char * ext_mem = ( char *) 0x1400;
+	ext_mem [ 0 ] = 0x01;
+  ae:	81 e0       	ldi	r24, 0x01	; 1
+  b0:	80 93 00 14 	sts	0x1400, r24	; 0x801400 <__bss_end+0x12e2>
+  b4:	08 95       	ret
+
+000000b6 <adc_read>:
+}
+
+uint8_t adc_read ( uint8_t channel ){
+  b6:	cf 93       	push	r28
+  b8:	c8 2f       	mov	r28, r24
+	
+	adc_sample();
+  ba:	0e 94 57 00 	call	0xae	; 0xae <adc_sample>
+	
+	while((PIND & 1<<PIND4) == 0 ){}// While BUSY is low, spin here
+  be:	84 9b       	sbis	0x10, 4	; 16
+  c0:	fe cf       	rjmp	.-4      	; 0xbe <adc_read+0x8>
+
+	//_delay_ms(100);
+	volatile char * ext_mem = ( char *) 0x1400 ;
+	uint8_t ch_0 = ext_mem [ 0 ];
+  c2:	e0 e0       	ldi	r30, 0x00	; 0
+  c4:	f4 e1       	ldi	r31, 0x14	; 20
+  c6:	90 81       	ld	r25, Z
+	uint8_t ch_1 = ext_mem [ 0 ];
+  c8:	30 81       	ld	r19, Z
+	uint8_t ch_2 = ext_mem [ 0 ];
+  ca:	80 81       	ld	r24, Z
+	uint8_t ch_3 = ext_mem [ 0 ];
+  cc:	20 81       	ld	r18, Z
+	
+	switch (channel)
+  ce:	c1 30       	cpi	r28, 0x01	; 1
+  d0:	39 f0       	breq	.+14     	; 0xe0 <adc_read+0x2a>
+  d2:	50 f0       	brcs	.+20     	; 0xe8 <adc_read+0x32>
+  d4:	c2 30       	cpi	r28, 0x02	; 2
+  d6:	49 f0       	breq	.+18     	; 0xea <adc_read+0x34>
+  d8:	c3 30       	cpi	r28, 0x03	; 3
+  da:	21 f0       	breq	.+8      	; 0xe4 <adc_read+0x2e>
+
+		case 3:
+		return ch_3;
+
+		default:
+		return 0;
+  dc:	80 e0       	ldi	r24, 0x00	; 0
+  de:	05 c0       	rjmp	.+10     	; 0xea <adc_read+0x34>
+	{
+		case 0:
+		return ch_0;
+		
+		case 1:
+		return ch_1;
+  e0:	83 2f       	mov	r24, r19
+  e2:	03 c0       	rjmp	.+6      	; 0xea <adc_read+0x34>
+
+		case 2:
+		return ch_2;
+
+		case 3:
+		return ch_3;
+  e4:	82 2f       	mov	r24, r18
+  e6:	01 c0       	rjmp	.+2      	; 0xea <adc_read+0x34>
+	uint8_t ch_3 = ext_mem [ 0 ];
+	
+	switch (channel)
+	{
+		case 0:
+		return ch_0;
+  e8:	89 2f       	mov	r24, r25
+		return ch_3;
+
+		default:
+		return 0;
+	}
+}
+  ea:	cf 91       	pop	r28
+  ec:	08 95       	ret
+
+000000ee <adc_calibrate>:
+
+void adc_calibrate( void ){
+  ee:	cf 93       	push	r28
+	uint8_t adc_x = adc_read(0);
+  f0:	80 e0       	ldi	r24, 0x00	; 0
+  f2:	0e 94 5b 00 	call	0xb6	; 0xb6 <adc_read>
+  f6:	c8 2f       	mov	r28, r24
+	uint8_t adc_y = adc_read(1);
+  f8:	81 e0       	ldi	r24, 0x01	; 1
+  fa:	0e 94 5b 00 	call	0xb6	; 0xb6 <adc_read>
+	
+	if(m_middle_x_value == 0)
+  fe:	90 91 10 01 	lds	r25, 0x0110	; 0x800110 <m_middle_x_value>
+ 102:	91 11       	cpse	r25, r1
+ 104:	02 c0       	rjmp	.+4      	; 0x10a <adc_calibrate+0x1c>
+	m_middle_x_value = adc_x;
+ 106:	c0 93 10 01 	sts	0x0110, r28	; 0x800110 <m_middle_x_value>
+	
+	if(m_middle_y_value == 0)
+ 10a:	90 91 0e 01 	lds	r25, 0x010E	; 0x80010e <__data_end>
+ 10e:	91 11       	cpse	r25, r1
+ 110:	02 c0       	rjmp	.+4      	; 0x116 <adc_calibrate+0x28>
+	m_middle_y_value = adc_y;
+ 112:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <__data_end>
+	
+	//setting max and min values for x-values of joystick
+	if (adc_x > m_max_x_value)
+ 116:	90 91 11 01 	lds	r25, 0x0111	; 0x800111 <m_max_x_value>
+ 11a:	9c 17       	cp	r25, r28
+ 11c:	10 f4       	brcc	.+4      	; 0x122 <adc_calibrate+0x34>
+	m_max_x_value = adc_x;
+ 11e:	c0 93 11 01 	sts	0x0111, r28	; 0x800111 <m_max_x_value>
+
+	if (adc_x < m_min_x_value)
+ 122:	90 91 07 01 	lds	r25, 0x0107	; 0x800107 <m_min_x_value>
+ 126:	c9 17       	cp	r28, r25
+ 128:	10 f4       	brcc	.+4      	; 0x12e <adc_calibrate+0x40>
+	m_min_x_value = adc_x;
+ 12a:	c0 93 07 01 	sts	0x0107, r28	; 0x800107 <m_min_x_value>
+
+	//setting max and min values for y-values of joystick
+	if (adc_y > m_max_y_value)
+ 12e:	90 91 0f 01 	lds	r25, 0x010F	; 0x80010f <m_max_y_value>
+ 132:	98 17       	cp	r25, r24
+ 134:	10 f4       	brcc	.+4      	; 0x13a <adc_calibrate+0x4c>
+	m_max_y_value = adc_y;
+ 136:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <m_max_y_value>
+	
+	if (adc_y < m_min_y_value)
+ 13a:	90 91 06 01 	lds	r25, 0x0106	; 0x800106 <m_min_y_value>
+ 13e:	89 17       	cp	r24, r25
+ 140:	10 f4       	brcc	.+4      	; 0x146 <adc_calibrate+0x58>
+	m_min_y_value = adc_y;
+ 142:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <m_min_y_value>
+}
+ 146:	cf 91       	pop	r28
+ 148:	08 95       	ret
+
+0000014a <pos_read>:
+
+pos_p pos_read(void){
+ 14a:	cf 93       	push	r28
+ 14c:	df 93       	push	r29
+	
+	int16_t adc_x = adc_read(0);
+ 14e:	80 e0       	ldi	r24, 0x00	; 0
+ 150:	0e 94 5b 00 	call	0xb6	; 0xb6 <adc_read>
+ 154:	c8 2f       	mov	r28, r24
+ 156:	d0 e0       	ldi	r29, 0x00	; 0
+	int16_t adc_y = adc_read(1);
+ 158:	81 e0       	ldi	r24, 0x01	; 1
+ 15a:	0e 94 5b 00 	call	0xb6	; 0xb6 <adc_read>
+ 15e:	28 2f       	mov	r18, r24
+ 160:	30 e0       	ldi	r19, 0x00	; 0
+
+	if(adc_x <= m_middle_x_value)
+ 162:	40 91 10 01 	lds	r20, 0x0110	; 0x800110 <m_middle_x_value>
+ 166:	50 e0       	ldi	r21, 0x00	; 0
+ 168:	4c 17       	cp	r20, r28
+ 16a:	5d 07       	cpc	r21, r29
+ 16c:	9c f0       	brlt	.+38     	; 0x194 <pos_read+0x4a>
+	posistion_percentage.x_axis	= 100*(adc_x - m_middle_x_value)/(m_middle_x_value-m_min_x_value);
+ 16e:	c4 1b       	sub	r28, r20
+ 170:	d5 0b       	sbc	r29, r21
+ 172:	64 e6       	ldi	r22, 0x64	; 100
+ 174:	6c 9f       	mul	r22, r28
+ 176:	c0 01       	movw	r24, r0
+ 178:	6d 9f       	mul	r22, r29
+ 17a:	90 0d       	add	r25, r0
+ 17c:	11 24       	eor	r1, r1
+ 17e:	60 91 07 01 	lds	r22, 0x0107	; 0x800107 <m_min_x_value>
+ 182:	fa 01       	movw	r30, r20
+ 184:	e6 1b       	sub	r30, r22
+ 186:	f1 09       	sbc	r31, r1
+ 188:	bf 01       	movw	r22, r30
+ 18a:	0e 94 8c 01 	call	0x318	; 0x318 <__divmodhi4>
+ 18e:	60 93 12 01 	sts	0x0112, r22	; 0x800112 <posistion_percentage>
+ 192:	11 c0       	rjmp	.+34     	; 0x1b6 <pos_read+0x6c>
+	else
+	posistion_percentage.x_axis	= 100*(adc_x - m_middle_x_value)/(m_max_x_value-m_middle_x_value);
+ 194:	c4 1b       	sub	r28, r20
+ 196:	d5 0b       	sbc	r29, r21
+ 198:	64 e6       	ldi	r22, 0x64	; 100
+ 19a:	6c 9f       	mul	r22, r28
+ 19c:	c0 01       	movw	r24, r0
+ 19e:	6d 9f       	mul	r22, r29
+ 1a0:	90 0d       	add	r25, r0
+ 1a2:	11 24       	eor	r1, r1
+ 1a4:	60 91 11 01 	lds	r22, 0x0111	; 0x800111 <m_max_x_value>
+ 1a8:	70 e0       	ldi	r23, 0x00	; 0
+ 1aa:	64 1b       	sub	r22, r20
+ 1ac:	75 0b       	sbc	r23, r21
+ 1ae:	0e 94 8c 01 	call	0x318	; 0x318 <__divmodhi4>
+ 1b2:	60 93 12 01 	sts	0x0112, r22	; 0x800112 <posistion_percentage>
+
+	if(adc_y <= m_middle_y_value)
+ 1b6:	40 91 0e 01 	lds	r20, 0x010E	; 0x80010e <__data_end>
+ 1ba:	50 e0       	ldi	r21, 0x00	; 0
+ 1bc:	42 17       	cp	r20, r18
+ 1be:	53 07       	cpc	r21, r19
+ 1c0:	94 f0       	brlt	.+36     	; 0x1e6 <pos_read+0x9c>
+	posistion_percentage.y_axis	= 100*(adc_y - m_middle_y_value)/(m_middle_y_value-m_min_y_value);
+ 1c2:	24 1b       	sub	r18, r20
+ 1c4:	35 0b       	sbc	r19, r21
+ 1c6:	64 e6       	ldi	r22, 0x64	; 100
+ 1c8:	62 9f       	mul	r22, r18
+ 1ca:	c0 01       	movw	r24, r0
+ 1cc:	63 9f       	mul	r22, r19
+ 1ce:	90 0d       	add	r25, r0
+ 1d0:	11 24       	eor	r1, r1
+ 1d2:	20 91 06 01 	lds	r18, 0x0106	; 0x800106 <m_min_y_value>
+ 1d6:	ba 01       	movw	r22, r20
+ 1d8:	62 1b       	sub	r22, r18
+ 1da:	71 09       	sbc	r23, r1
+ 1dc:	0e 94 8c 01 	call	0x318	; 0x318 <__divmodhi4>
+ 1e0:	60 93 13 01 	sts	0x0113, r22	; 0x800113 <posistion_percentage+0x1>
+ 1e4:	11 c0       	rjmp	.+34     	; 0x208 <__EEPROM_REGION_LENGTH__+0x8>
+	else
+	posistion_percentage.y_axis	= 100*(adc_y - m_middle_y_value)/(m_max_y_value-m_middle_y_value);
+ 1e6:	24 1b       	sub	r18, r20
+ 1e8:	35 0b       	sbc	r19, r21
+ 1ea:	64 e6       	ldi	r22, 0x64	; 100
+ 1ec:	62 9f       	mul	r22, r18
+ 1ee:	c0 01       	movw	r24, r0
+ 1f0:	63 9f       	mul	r22, r19
+ 1f2:	90 0d       	add	r25, r0
+ 1f4:	11 24       	eor	r1, r1
+ 1f6:	60 91 0f 01 	lds	r22, 0x010F	; 0x80010f <m_max_y_value>
+ 1fa:	70 e0       	ldi	r23, 0x00	; 0
+ 1fc:	64 1b       	sub	r22, r20
+ 1fe:	75 0b       	sbc	r23, r21
+ 200:	0e 94 8c 01 	call	0x318	; 0x318 <__divmodhi4>
+ 204:	60 93 13 01 	sts	0x0113, r22	; 0x800113 <posistion_percentage+0x1>
+	
+	return posistion_percentage;
+}
+ 208:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <posistion_percentage>
+ 20c:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <posistion_percentage+0x1>
+ 210:	df 91       	pop	r29
+ 212:	cf 91       	pop	r28
+ 214:	08 95       	ret
+
+00000216 <direction_read>:
+
+direction direction_read (void){
+	if((posistion_percentage.x_axis < 5)&&(posistion_percentage.x_axis > -5)&&(posistion_percentage.y_axis < 5)&&(posistion_percentage.x_axis > -5))
+ 216:	20 91 12 01 	lds	r18, 0x0112	; 0x800112 <posistion_percentage>
+ 21a:	84 e0       	ldi	r24, 0x04	; 4
+ 21c:	82 0f       	add	r24, r18
+ 21e:	89 30       	cpi	r24, 0x09	; 9
+ 220:	30 f4       	brcc	.+12     	; 0x22e <direction_read+0x18>
+ 222:	80 91 13 01 	lds	r24, 0x0113	; 0x800113 <posistion_percentage+0x1>
+ 226:	85 30       	cpi	r24, 0x05	; 5
+ 228:	14 f4       	brge	.+4      	; 0x22e <direction_read+0x18>
+ 22a:	2c 3f       	cpi	r18, 0xFC	; 252
+ 22c:	fc f4       	brge	.+62     	; 0x26c <direction_read+0x56>
+	return neutral;
+
+	if(abs(posistion_percentage.x_axis) <= abs(posistion_percentage.y_axis)){
+ 22e:	82 2f       	mov	r24, r18
+ 230:	02 2e       	mov	r0, r18
+ 232:	00 0c       	add	r0, r0
+ 234:	99 0b       	sbc	r25, r25
+ 236:	99 23       	and	r25, r25
+ 238:	1c f4       	brge	.+6      	; 0x240 <direction_read+0x2a>
+ 23a:	91 95       	neg	r25
+ 23c:	81 95       	neg	r24
+ 23e:	91 09       	sbc	r25, r1
+ 240:	30 91 13 01 	lds	r19, 0x0113	; 0x800113 <posistion_percentage+0x1>
+ 244:	43 2f       	mov	r20, r19
+ 246:	03 2e       	mov	r0, r19
+ 248:	00 0c       	add	r0, r0
+ 24a:	55 0b       	sbc	r21, r21
+ 24c:	55 23       	and	r21, r21
+ 24e:	1c f4       	brge	.+6      	; 0x256 <direction_read+0x40>
+ 250:	51 95       	neg	r21
+ 252:	41 95       	neg	r20
+ 254:	51 09       	sbc	r21, r1
+ 256:	48 17       	cp	r20, r24
+ 258:	59 07       	cpc	r21, r25
+ 25a:	24 f0       	brlt	.+8      	; 0x264 <direction_read+0x4e>
+		if(posistion_percentage.y_axis < 0)
+ 25c:	33 23       	and	r19, r19
+ 25e:	44 f4       	brge	.+16     	; 0x270 <direction_read+0x5a>
+		return down;
+ 260:	83 e0       	ldi	r24, 0x03	; 3
+ 262:	08 95       	ret
+	return up;}
+	else{
+		if(posistion_percentage.x_axis < 0)
+ 264:	22 23       	and	r18, r18
+ 266:	34 f4       	brge	.+12     	; 0x274 <direction_read+0x5e>
+		return left;
+ 268:	81 e0       	ldi	r24, 0x01	; 1
+ 26a:	08 95       	ret
+	return posistion_percentage;
+}
+
+direction direction_read (void){
+	if((posistion_percentage.x_axis < 5)&&(posistion_percentage.x_axis > -5)&&(posistion_percentage.y_axis < 5)&&(posistion_percentage.x_axis > -5))
+	return neutral;
+ 26c:	84 e0       	ldi	r24, 0x04	; 4
+ 26e:	08 95       	ret
+
+	if(abs(posistion_percentage.x_axis) <= abs(posistion_percentage.y_axis)){
+		if(posistion_percentage.y_axis < 0)
+		return down;
+	return up;}
+ 270:	82 e0       	ldi	r24, 0x02	; 2
+ 272:	08 95       	ret
+	else{
+		if(posistion_percentage.x_axis < 0)
+		return left;
+	return right;}
+ 274:	80 e0       	ldi	r24, 0x00	; 0
+}
+ 276:	08 95       	ret
+
+00000278 <main>:
+#include "ADCdriver.h"
 #include "USARTdriver.h"
 
 int main(void)
 {
 	USART_Init( MYUBRR );
-  ae:	8f e1       	ldi	r24, 0x1F	; 31
-  b0:	90 e0       	ldi	r25, 0x00	; 0
-  b2:	0e 94 80 00 	call	0x100	; 0x100 <USART_Init>
+ 278:	8f e1       	ldi	r24, 0x1F	; 31
+ 27a:	90 e0       	ldi	r25, 0x00	; 0
+ 27c:	0e 94 65 01 	call	0x2ca	; 0x2ca <USART_Init>
 	
 	xmem_init();
-  b6:	0e 94 8d 00 	call	0x11a	; 0x11a <xmem_init>
+ 280:	0e 94 72 01 	call	0x2e4	; 0x2e4 <xmem_init>
 	adc_init();
-  ba:	0e 94 94 00 	call	0x128	; 0x128 <adc_init>
+ 284:	0e 94 79 01 	call	0x2f2	; 0x2f2 <adc_init>
 	
 	
 	while(1){
 		adc_calibrate();
-  be:	0e 94 c7 00 	call	0x18e	; 0x18e <adc_calibrate>
+ 288:	0e 94 77 00 	call	0xee	; 0xee <adc_calibrate>
 		pos_p p = pos_read();
-  c2:	0e 94 f5 00 	call	0x1ea	; 0x1ea <pos_read>
+ 28c:	0e 94 a5 00 	call	0x14a	; 0x14a <pos_read>
 
 		//uint8_t adc_l = pos_left_slider();
 		//uint8_t adc_r = pos_right_slider();
 		
 		enum direction dirt = direction_read ();	
-  c6:	0e 94 5b 01 	call	0x2b6	; 0x2b6 <direction_read>
+ 290:	0e 94 0b 01 	call	0x216	; 0x216 <direction_read>
 
 		//printf("X: %d, Y: %d  \n\r", p.x_axis, p.y_axis);
 		//
 		printf("%d \n\r",dirt);
-  ca:	1f 92       	push	r1
-  cc:	8f 93       	push	r24
-  ce:	88 e0       	ldi	r24, 0x08	; 8
-  d0:	91 e0       	ldi	r25, 0x01	; 1
-  d2:	9f 93       	push	r25
-  d4:	8f 93       	push	r24
-  d6:	0e 94 ff 01 	call	0x3fe	; 0x3fe <printf>
+ 294:	1f 92       	push	r1
+ 296:	8f 93       	push	r24
+ 298:	88 e0       	ldi	r24, 0x08	; 8
+ 29a:	91 e0       	ldi	r25, 0x01	; 1
+ 29c:	9f 93       	push	r25
+ 29e:	8f 93       	push	r24
+ 2a0:	0e 94 ff 01 	call	0x3fe	; 0x3fe <printf>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  da:	8f ef       	ldi	r24, 0xFF	; 255
-  dc:	9f e2       	ldi	r25, 0x2F	; 47
-  de:	01 97       	sbiw	r24, 0x01	; 1
-  e0:	f1 f7       	brne	.-4      	; 0xde <main+0x30>
-  e2:	00 c0       	rjmp	.+0      	; 0xe4 <main+0x36>
-  e4:	00 00       	nop
-  e6:	0f 90       	pop	r0
-  e8:	0f 90       	pop	r0
-  ea:	0f 90       	pop	r0
-  ec:	0f 90       	pop	r0
-  ee:	e7 cf       	rjmp	.-50     	; 0xbe <main+0x10>
+ 2a4:	8f ef       	ldi	r24, 0xFF	; 255
+ 2a6:	9f e2       	ldi	r25, 0x2F	; 47
+ 2a8:	01 97       	sbiw	r24, 0x01	; 1
+ 2aa:	f1 f7       	brne	.-4      	; 0x2a8 <main+0x30>
+ 2ac:	00 c0       	rjmp	.+0      	; 0x2ae <main+0x36>
+ 2ae:	00 00       	nop
+ 2b0:	0f 90       	pop	r0
+ 2b2:	0f 90       	pop	r0
+ 2b4:	0f 90       	pop	r0
+ 2b6:	0f 90       	pop	r0
+ 2b8:	e7 cf       	rjmp	.-50     	; 0x288 <main+0x10>
 
-000000f0 <USART_Transmit>:
-  f0:	5d 9b       	sbis	0x0b, 5	; 11
-  f2:	fe cf       	rjmp	.-4      	; 0xf0 <USART_Transmit>
-  f4:	8c b9       	out	0x0c, r24	; 12
-  f6:	08 95       	ret
+000002ba <USART_Transmit>:
+ 2ba:	5d 9b       	sbis	0x0b, 5	; 11
+ 2bc:	fe cf       	rjmp	.-4      	; 0x2ba <USART_Transmit>
+ 2be:	8c b9       	out	0x0c, r24	; 12
+ 2c0:	08 95       	ret
 
-000000f8 <USART_Receive>:
-  f8:	5f 9b       	sbis	0x0b, 7	; 11
-  fa:	fe cf       	rjmp	.-4      	; 0xf8 <USART_Receive>
-  fc:	8c b1       	in	r24, 0x0c	; 12
-  fe:	08 95       	ret
+000002c2 <USART_Receive>:
+ 2c2:	5f 9b       	sbis	0x0b, 7	; 11
+ 2c4:	fe cf       	rjmp	.-4      	; 0x2c2 <USART_Receive>
+ 2c6:	8c b1       	in	r24, 0x0c	; 12
+ 2c8:	08 95       	ret
 
-00000100 <USART_Init>:
- 100:	90 bd       	out	0x20, r25	; 32
- 102:	89 b9       	out	0x09, r24	; 9
- 104:	88 e1       	ldi	r24, 0x18	; 24
- 106:	8a b9       	out	0x0a, r24	; 10
- 108:	8e e8       	ldi	r24, 0x8E	; 142
- 10a:	80 bd       	out	0x20, r24	; 32
- 10c:	6c e7       	ldi	r22, 0x7C	; 124
- 10e:	70 e0       	ldi	r23, 0x00	; 0
- 110:	88 e7       	ldi	r24, 0x78	; 120
- 112:	90 e0       	ldi	r25, 0x00	; 0
- 114:	0e 94 b4 01 	call	0x368	; 0x368 <fdevopen>
- 118:	08 95       	ret
+000002ca <USART_Init>:
+ 2ca:	90 bd       	out	0x20, r25	; 32
+ 2cc:	89 b9       	out	0x09, r24	; 9
+ 2ce:	88 e1       	ldi	r24, 0x18	; 24
+ 2d0:	8a b9       	out	0x0a, r24	; 10
+ 2d2:	8e e8       	ldi	r24, 0x8E	; 142
+ 2d4:	80 bd       	out	0x20, r24	; 32
+ 2d6:	61 e6       	ldi	r22, 0x61	; 97
+ 2d8:	71 e0       	ldi	r23, 0x01	; 1
+ 2da:	8d e5       	ldi	r24, 0x5D	; 93
+ 2dc:	91 e0       	ldi	r25, 0x01	; 1
+ 2de:	0e 94 b4 01 	call	0x368	; 0x368 <fdevopen>
+ 2e2:	08 95       	ret
 
-0000011a <xmem_init>:
+000002e4 <xmem_init>:
+ */ 
 
-uint8_t xmem_read ( uint16_t addr ){
-	volatile char * ext_mem = ( char *) BASE_ADDRESS ;
-	uint8_t ret_val = ext_mem [ addr ];
-	return ret_val ;
+#include "XMEMdriver.h"
+
+void xmem_init ( void ){
+	MCUCR |= (1 << SRE ); // enable XMEM
+ 2e4:	85 b7       	in	r24, 0x35	; 53
+ 2e6:	80 68       	ori	r24, 0x80	; 128
+ 2e8:	85 bf       	out	0x35, r24	; 53
+	SFIOR |= (1 << XMM2 ); // mask unused bits
+ 2ea:	80 b7       	in	r24, 0x30	; 48
+ 2ec:	80 62       	ori	r24, 0x20	; 32
+ 2ee:	80 bf       	out	0x30, r24	; 48
+ 2f0:	08 95       	ret
+
+000002f2 <adc_init>:
 }
- 11a:	85 b7       	in	r24, 0x35	; 53
- 11c:	80 68       	ori	r24, 0x80	; 128
- 11e:	85 bf       	out	0x35, r24	; 53
- 120:	80 b7       	in	r24, 0x30	; 48
- 122:	80 62       	ori	r24, 0x20	; 32
- 124:	80 bf       	out	0x30, r24	; 48
- 126:	08 95       	ret
 
-00000128 <adc_init>:
- 128:	81 b3       	in	r24, 0x11	; 17
- 12a:	80 62       	ori	r24, 0x20	; 32
- 12c:	81 bb       	out	0x11, r24	; 17
- 12e:	81 b3       	in	r24, 0x11	; 17
- 130:	81 bb       	out	0x11, r24	; 17
- 132:	8e b5       	in	r24, 0x2e	; 46
- 134:	88 60       	ori	r24, 0x08	; 8
- 136:	8e bd       	out	0x2e, r24	; 46
- 138:	8f b5       	in	r24, 0x2f	; 47
- 13a:	8f bd       	out	0x2f, r24	; 47
- 13c:	8e b5       	in	r24, 0x2e	; 46
- 13e:	81 60       	ori	r24, 0x01	; 1
- 140:	8e bd       	out	0x2e, r24	; 46
- 142:	8f b5       	in	r24, 0x2f	; 47
- 144:	80 64       	ori	r24, 0x40	; 64
- 146:	8f bd       	out	0x2f, r24	; 47
- 148:	1b bc       	out	0x2b, r1	; 43
- 14a:	1a bc       	out	0x2a, r1	; 42
- 14c:	08 95       	ret
+void adc_init ( void ){
 
-0000014e <adc_sample>:
- 14e:	81 e0       	ldi	r24, 0x01	; 1
- 150:	80 93 00 14 	sts	0x1400, r24	; 0x801400 <__bss_end+0x12e2>
- 154:	08 95       	ret
-
-00000156 <adc_read>:
- 156:	cf 93       	push	r28
- 158:	c8 2f       	mov	r28, r24
- 15a:	0e 94 a7 00 	call	0x14e	; 0x14e <adc_sample>
- 15e:	84 9b       	sbis	0x10, 4	; 16
- 160:	fe cf       	rjmp	.-4      	; 0x15e <adc_read+0x8>
- 162:	e0 e0       	ldi	r30, 0x00	; 0
- 164:	f4 e1       	ldi	r31, 0x14	; 20
- 166:	90 81       	ld	r25, Z
- 168:	30 81       	ld	r19, Z
- 16a:	80 81       	ld	r24, Z
- 16c:	20 81       	ld	r18, Z
- 16e:	c1 30       	cpi	r28, 0x01	; 1
- 170:	39 f0       	breq	.+14     	; 0x180 <adc_read+0x2a>
- 172:	50 f0       	brcs	.+20     	; 0x188 <adc_read+0x32>
- 174:	c2 30       	cpi	r28, 0x02	; 2
- 176:	49 f0       	breq	.+18     	; 0x18a <adc_read+0x34>
- 178:	c3 30       	cpi	r28, 0x03	; 3
- 17a:	21 f0       	breq	.+8      	; 0x184 <adc_read+0x2e>
- 17c:	80 e0       	ldi	r24, 0x00	; 0
- 17e:	05 c0       	rjmp	.+10     	; 0x18a <adc_read+0x34>
- 180:	83 2f       	mov	r24, r19
- 182:	03 c0       	rjmp	.+6      	; 0x18a <adc_read+0x34>
- 184:	82 2f       	mov	r24, r18
- 186:	01 c0       	rjmp	.+2      	; 0x18a <adc_read+0x34>
- 188:	89 2f       	mov	r24, r25
- 18a:	cf 91       	pop	r28
- 18c:	08 95       	ret
-
-0000018e <adc_calibrate>:
- 18e:	cf 93       	push	r28
- 190:	80 e0       	ldi	r24, 0x00	; 0
- 192:	0e 94 ab 00 	call	0x156	; 0x156 <adc_read>
- 196:	c8 2f       	mov	r28, r24
- 198:	81 e0       	ldi	r24, 0x01	; 1
- 19a:	0e 94 ab 00 	call	0x156	; 0x156 <adc_read>
- 19e:	90 91 10 01 	lds	r25, 0x0110	; 0x800110 <m_middle_x_value>
- 1a2:	91 11       	cpse	r25, r1
- 1a4:	02 c0       	rjmp	.+4      	; 0x1aa <adc_calibrate+0x1c>
- 1a6:	c0 93 10 01 	sts	0x0110, r28	; 0x800110 <m_middle_x_value>
- 1aa:	90 91 0e 01 	lds	r25, 0x010E	; 0x80010e <__data_end>
- 1ae:	91 11       	cpse	r25, r1
- 1b0:	02 c0       	rjmp	.+4      	; 0x1b6 <adc_calibrate+0x28>
- 1b2:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <__data_end>
- 1b6:	90 91 11 01 	lds	r25, 0x0111	; 0x800111 <m_max_x_value>
- 1ba:	9c 17       	cp	r25, r28
- 1bc:	10 f4       	brcc	.+4      	; 0x1c2 <adc_calibrate+0x34>
- 1be:	c0 93 11 01 	sts	0x0111, r28	; 0x800111 <m_max_x_value>
- 1c2:	90 91 07 01 	lds	r25, 0x0107	; 0x800107 <m_min_x_value>
- 1c6:	c9 17       	cp	r28, r25
- 1c8:	10 f4       	brcc	.+4      	; 0x1ce <adc_calibrate+0x40>
- 1ca:	c0 93 07 01 	sts	0x0107, r28	; 0x800107 <m_min_x_value>
- 1ce:	90 91 0f 01 	lds	r25, 0x010F	; 0x80010f <m_max_y_value>
- 1d2:	98 17       	cp	r25, r24
- 1d4:	10 f4       	brcc	.+4      	; 0x1da <adc_calibrate+0x4c>
- 1d6:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <m_max_y_value>
- 1da:	90 91 06 01 	lds	r25, 0x0106	; 0x800106 <m_min_y_value>
- 1de:	89 17       	cp	r24, r25
- 1e0:	10 f4       	brcc	.+4      	; 0x1e6 <adc_calibrate+0x58>
- 1e2:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <m_min_y_value>
- 1e6:	cf 91       	pop	r28
- 1e8:	08 95       	ret
-
-000001ea <pos_read>:
-
-pos_p pos_read(void){
- 1ea:	cf 93       	push	r28
- 1ec:	df 93       	push	r29
+	DDRD |= (1<<DDD5); // Set Data Direction PD5 to Write (output)
+ 2f2:	81 b3       	in	r24, 0x11	; 17
+ 2f4:	80 62       	ori	r24, 0x20	; 32
+ 2f6:	81 bb       	out	0x11, r24	; 17
+	DDRD |= (0<<DDD4); // Set Data Direction PD4 to Read (input). Used for BUSY from ADC
+ 2f8:	81 b3       	in	r24, 0x11	; 17
+ 2fa:	81 bb       	out	0x11, r24	; 17
 	
-	int16_t adc_x = adc_read(0);
- 1ee:	80 e0       	ldi	r24, 0x00	; 0
- 1f0:	0e 94 ab 00 	call	0x156	; 0x156 <adc_read>
- 1f4:	c8 2f       	mov	r28, r24
- 1f6:	d0 e0       	ldi	r29, 0x00	; 0
-	int16_t adc_y = adc_read(1);
- 1f8:	81 e0       	ldi	r24, 0x01	; 1
- 1fa:	0e 94 ab 00 	call	0x156	; 0x156 <adc_read>
- 1fe:	28 2f       	mov	r18, r24
- 200:	30 e0       	ldi	r19, 0x00	; 0
-
-	if(adc_x <= m_middle_x_value)
- 202:	40 91 10 01 	lds	r20, 0x0110	; 0x800110 <m_middle_x_value>
- 206:	50 e0       	ldi	r21, 0x00	; 0
- 208:	4c 17       	cp	r20, r28
- 20a:	5d 07       	cpc	r21, r29
- 20c:	9c f0       	brlt	.+38     	; 0x234 <__EEPROM_REGION_LENGTH__+0x34>
-		posistion_percentage.x_axis	= 100*(adc_x - m_middle_x_value)/(m_middle_x_value-m_min_x_value);
- 20e:	c4 1b       	sub	r28, r20
- 210:	d5 0b       	sbc	r29, r21
- 212:	64 e6       	ldi	r22, 0x64	; 100
- 214:	6c 9f       	mul	r22, r28
- 216:	c0 01       	movw	r24, r0
- 218:	6d 9f       	mul	r22, r29
- 21a:	90 0d       	add	r25, r0
- 21c:	11 24       	eor	r1, r1
- 21e:	60 91 07 01 	lds	r22, 0x0107	; 0x800107 <m_min_x_value>
- 222:	fa 01       	movw	r30, r20
- 224:	e6 1b       	sub	r30, r22
- 226:	f1 09       	sbc	r31, r1
- 228:	bf 01       	movw	r22, r30
- 22a:	0e 94 8c 01 	call	0x318	; 0x318 <__divmodhi4>
- 22e:	60 93 12 01 	sts	0x0112, r22	; 0x800112 <posistion_percentage>
- 232:	11 c0       	rjmp	.+34     	; 0x256 <__EEPROM_REGION_LENGTH__+0x56>
-	else
-		posistion_percentage.x_axis	= 100*(adc_x - m_middle_x_value)/(m_max_x_value-m_middle_x_value);
- 234:	c4 1b       	sub	r28, r20
- 236:	d5 0b       	sbc	r29, r21
- 238:	64 e6       	ldi	r22, 0x64	; 100
- 23a:	6c 9f       	mul	r22, r28
- 23c:	c0 01       	movw	r24, r0
- 23e:	6d 9f       	mul	r22, r29
- 240:	90 0d       	add	r25, r0
- 242:	11 24       	eor	r1, r1
- 244:	60 91 11 01 	lds	r22, 0x0111	; 0x800111 <m_max_x_value>
- 248:	70 e0       	ldi	r23, 0x00	; 0
- 24a:	64 1b       	sub	r22, r20
- 24c:	75 0b       	sbc	r23, r21
- 24e:	0e 94 8c 01 	call	0x318	; 0x318 <__divmodhi4>
- 252:	60 93 12 01 	sts	0x0112, r22	; 0x800112 <posistion_percentage>
-
-	if(adc_y <= m_middle_y_value)
- 256:	40 91 0e 01 	lds	r20, 0x010E	; 0x80010e <__data_end>
- 25a:	50 e0       	ldi	r21, 0x00	; 0
- 25c:	42 17       	cp	r20, r18
- 25e:	53 07       	cpc	r21, r19
- 260:	94 f0       	brlt	.+36     	; 0x286 <__EEPROM_REGION_LENGTH__+0x86>
-		posistion_percentage.y_axis	= 100*(adc_y - m_middle_y_value)/(m_middle_y_value-m_min_y_value);
- 262:	24 1b       	sub	r18, r20
- 264:	35 0b       	sbc	r19, r21
- 266:	64 e6       	ldi	r22, 0x64	; 100
- 268:	62 9f       	mul	r22, r18
- 26a:	c0 01       	movw	r24, r0
- 26c:	63 9f       	mul	r22, r19
- 26e:	90 0d       	add	r25, r0
- 270:	11 24       	eor	r1, r1
- 272:	20 91 06 01 	lds	r18, 0x0106	; 0x800106 <m_min_y_value>
- 276:	ba 01       	movw	r22, r20
- 278:	62 1b       	sub	r22, r18
- 27a:	71 09       	sbc	r23, r1
- 27c:	0e 94 8c 01 	call	0x318	; 0x318 <__divmodhi4>
- 280:	60 93 13 01 	sts	0x0113, r22	; 0x800113 <posistion_percentage+0x1>
- 284:	11 c0       	rjmp	.+34     	; 0x2a8 <__EEPROM_REGION_LENGTH__+0xa8>
-	else
-		posistion_percentage.y_axis	= 100*(adc_y - m_middle_y_value)/(m_max_y_value-m_middle_y_value);
- 286:	24 1b       	sub	r18, r20
- 288:	35 0b       	sbc	r19, r21
- 28a:	64 e6       	ldi	r22, 0x64	; 100
- 28c:	62 9f       	mul	r22, r18
- 28e:	c0 01       	movw	r24, r0
- 290:	63 9f       	mul	r22, r19
- 292:	90 0d       	add	r25, r0
- 294:	11 24       	eor	r1, r1
- 296:	60 91 0f 01 	lds	r22, 0x010F	; 0x80010f <m_max_y_value>
- 29a:	70 e0       	ldi	r23, 0x00	; 0
- 29c:	64 1b       	sub	r22, r20
- 29e:	75 0b       	sbc	r23, r21
- 2a0:	0e 94 8c 01 	call	0x318	; 0x318 <__divmodhi4>
- 2a4:	60 93 13 01 	sts	0x0113, r22	; 0x800113 <posistion_percentage+0x1>
+	TCCR1B |= (1<<WGM12 | 0<<WGM13); // Set CTC mode
+ 2fc:	8e b5       	in	r24, 0x2e	; 46
+ 2fe:	88 60       	ori	r24, 0x08	; 8
+ 300:	8e bd       	out	0x2e, r24	; 46
+	TCCR1A |= (0<<WGM10 | 0<<WGM11); // Set CTC mode
+ 302:	8f b5       	in	r24, 0x2f	; 47
+ 304:	8f bd       	out	0x2f, r24	; 47
 	
-	return posistion_percentage;
-}
- 2a8:	80 91 12 01 	lds	r24, 0x0112	; 0x800112 <posistion_percentage>
- 2ac:	90 91 13 01 	lds	r25, 0x0113	; 0x800113 <posistion_percentage+0x1>
- 2b0:	df 91       	pop	r29
- 2b2:	cf 91       	pop	r28
- 2b4:	08 95       	ret
+	TCCR1B |= (1<<CS10 | 0<<CS11 | 0<<CS12); //Clk frequency equal to system clock
+ 306:	8e b5       	in	r24, 0x2e	; 46
+ 308:	81 60       	ori	r24, 0x01	; 1
+ 30a:	8e bd       	out	0x2e, r24	; 46
 
-000002b6 <direction_read>:
-
-direction direction_read (void){
-	if((posistion_percentage.x_axis < 5)&&(posistion_percentage.x_axis > -5)&&(posistion_percentage.y_axis < 5)&&(posistion_percentage.x_axis > -5))
- 2b6:	20 91 12 01 	lds	r18, 0x0112	; 0x800112 <posistion_percentage>
- 2ba:	84 e0       	ldi	r24, 0x04	; 4
- 2bc:	82 0f       	add	r24, r18
- 2be:	89 30       	cpi	r24, 0x09	; 9
- 2c0:	30 f4       	brcc	.+12     	; 0x2ce <direction_read+0x18>
- 2c2:	80 91 13 01 	lds	r24, 0x0113	; 0x800113 <posistion_percentage+0x1>
- 2c6:	85 30       	cpi	r24, 0x05	; 5
- 2c8:	14 f4       	brge	.+4      	; 0x2ce <direction_read+0x18>
- 2ca:	2c 3f       	cpi	r18, 0xFC	; 252
- 2cc:	fc f4       	brge	.+62     	; 0x30c <direction_read+0x56>
-		return neutral;
-
-	if(abs(posistion_percentage.x_axis) <= abs(posistion_percentage.y_axis)){
- 2ce:	82 2f       	mov	r24, r18
- 2d0:	02 2e       	mov	r0, r18
- 2d2:	00 0c       	add	r0, r0
- 2d4:	99 0b       	sbc	r25, r25
- 2d6:	99 23       	and	r25, r25
- 2d8:	1c f4       	brge	.+6      	; 0x2e0 <direction_read+0x2a>
- 2da:	91 95       	neg	r25
- 2dc:	81 95       	neg	r24
- 2de:	91 09       	sbc	r25, r1
- 2e0:	30 91 13 01 	lds	r19, 0x0113	; 0x800113 <posistion_percentage+0x1>
- 2e4:	43 2f       	mov	r20, r19
- 2e6:	03 2e       	mov	r0, r19
- 2e8:	00 0c       	add	r0, r0
- 2ea:	55 0b       	sbc	r21, r21
- 2ec:	55 23       	and	r21, r21
- 2ee:	1c f4       	brge	.+6      	; 0x2f6 <direction_read+0x40>
- 2f0:	51 95       	neg	r21
- 2f2:	41 95       	neg	r20
- 2f4:	51 09       	sbc	r21, r1
- 2f6:	48 17       	cp	r20, r24
- 2f8:	59 07       	cpc	r21, r25
- 2fa:	24 f0       	brlt	.+8      	; 0x304 <direction_read+0x4e>
-		if(posistion_percentage.y_axis < 0)
- 2fc:	33 23       	and	r19, r19
- 2fe:	44 f4       	brge	.+16     	; 0x310 <direction_read+0x5a>
-			return down;
- 300:	83 e0       	ldi	r24, 0x03	; 3
- 302:	08 95       	ret
-		return up;}
-	else{
-		if(posistion_percentage.x_axis < 0)
- 304:	22 23       	and	r18, r18
- 306:	34 f4       	brge	.+12     	; 0x314 <direction_read+0x5e>
-			return left;
- 308:	81 e0       	ldi	r24, 0x01	; 1
- 30a:	08 95       	ret
-	return posistion_percentage;
-}
-
-direction direction_read (void){
-	if((posistion_percentage.x_axis < 5)&&(posistion_percentage.x_axis > -5)&&(posistion_percentage.y_axis < 5)&&(posistion_percentage.x_axis > -5))
-		return neutral;
- 30c:	84 e0       	ldi	r24, 0x04	; 4
- 30e:	08 95       	ret
-
-	if(abs(posistion_percentage.x_axis) <= abs(posistion_percentage.y_axis)){
-		if(posistion_percentage.y_axis < 0)
-			return down;
-		return up;}
- 310:	82 e0       	ldi	r24, 0x02	; 2
- 312:	08 95       	ret
-	else{
-		if(posistion_percentage.x_axis < 0)
-			return left;
-		return right;}
- 314:	80 e0       	ldi	r24, 0x00	; 0
-} 
+	TCCR1A |= (0<<COM1A1 | 1<<COM1A0); // Set 0C1A to toggle on match
+ 30c:	8f b5       	in	r24, 0x2f	; 47
+ 30e:	80 64       	ori	r24, 0x40	; 64
+ 310:	8f bd       	out	0x2f, r24	; 47
+	
+	OCR1A = 0x0; // Set compare to 0. Timer reset on compare equal, will always stay at 0, toggle every cycle (?)
+ 312:	1b bc       	out	0x2b, r1	; 43
+ 314:	1a bc       	out	0x2a, r1	; 42
  316:	08 95       	ret
 
 00000318 <__divmodhi4>:
