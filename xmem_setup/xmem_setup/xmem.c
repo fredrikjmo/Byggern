@@ -7,6 +7,17 @@
 
 #include "xmem.h"
 
+uint8_t m_max_x_value = 0;
+uint8_t m_min_x_value = 255;
+uint8_t m_middle_x_value = 0;
+
+uint8_t m_max_y_value = 0;
+uint8_t m_min_y_value = 255;
+uint8_t m_middle_y_value = 0;
+
+pos_p posistion_percentage;
+
+
 void xmem_init ( void ){
 	MCUCR |= (1 << SRE ); // enable XMEM
 	SFIOR |= (1 << XMM2 ); // mask unused bits
@@ -65,7 +76,30 @@ uint8_t adc_read ( uint8_t channel ){
 	}
 }
 
-void adc_calibrate( void );
+void adc_calibrate( void ){
+	uint8_t adc_x = adc_read(0);
+	uint8_t adc_y = adc_read(1);
+	
+	if(m_middle_x_value == 0)
+		m_middle_x_value = adc_x;
+	
+	if(m_middle_y_value == 0)
+		m_middle_y_value = adc_y;
+	
+	//setting max and min values for x-values of joystick
+	if (adc_x > m_max_x_value)
+		m_max_x_value = adc_x;
+
+	if (adc_x < m_min_x_value)
+		m_min_x_value = adc_x;
+
+	//setting max and min values for y-values of joystick
+	if (adc_y > m_max_y_value)
+		m_max_y_value = adc_y;
+	
+	if (adc_y < m_min_y_value)
+		m_min_y_value = adc_y;
+}
 
 void xmem_write ( uint8_t data , uint16_t addr ){
 	volatile char * ext_mem = ( char *) BASE_ADDRESS ;
@@ -75,6 +109,44 @@ uint8_t xmem_read ( uint16_t addr ){
 	volatile char * ext_mem = ( char *) BASE_ADDRESS ;
 	uint8_t ret_val = ext_mem [ addr ];
 	return ret_val ;
+}
+
+pos_p pos_read(void){
+	
+	int16_t adc_x = adc_read(0);
+	int16_t adc_y = adc_read(1);
+
+	if(adc_x <= m_middle_x_value)
+		posistion_percentage.x_axis	= 100*(adc_x - m_middle_x_value)/(m_middle_x_value-m_min_x_value);
+	else
+		posistion_percentage.x_axis	= 100*(adc_x - m_middle_x_value)/(m_max_x_value-m_middle_x_value);
+
+	if(adc_y <= m_middle_y_value)
+		posistion_percentage.y_axis	= 100*(adc_y - m_middle_y_value)/(m_middle_y_value-m_min_y_value);
+	else
+		posistion_percentage.y_axis	= 100*(adc_y - m_middle_y_value)/(m_max_y_value-m_middle_y_value);
+	
+	return posistion_percentage;
+}
+
+direction direction_read (void){
+	if((posistion_percentage.x_axis < 5)&&(posistion_percentage.x_axis > -5)&&(posistion_percentage.y_axis < 5)&&(posistion_percentage.x_axis > -5))
+		return neutral;
+
+	if(abs(posistion_percentage.x_axis) <= abs(posistion_percentage.y_axis)){
+		if(posistion_percentage.y_axis < 0)
+			return down;
+		return up;}
+	else{
+		if(posistion_percentage.x_axis < 0)
+			return left;
+		return right;}
+} 
+
+uint8_t pos_left_slider(void){	uint8_t L_slider = adc_read(2);	return 100*L_slider/255;}uint8_t pos_right_slider(void){
+
+	uint8_t R_slider = adc_read(3);
+	return 100*R_slider/255;
 }
 
 void SRAM_test(void)
