@@ -18,26 +18,25 @@ int main(void)
 	
 	xmem_init();
 	adc_init();
-	
+	oled_init();
 	
 	while(1){
-		adc_calibrate();
-		pos_p p = pos_read();
+		//adc_calibrate();
+		// pos_p p = pos_read();
 
 		//uint8_t adc_l = pos_left_slider();
 		//uint8_t adc_r = pos_right_slider();
 		
-		enum direction dirt = direction_read ();	
+		//enum direction dirt = direction_read ();	
 
 		//printf("X: %d, Y: %d  \n\r", p.x_axis, p.y_axis);
 		//
-		printf("%d \n\r",dirt);
+		//printf("%d \n\r",dirt);
 
 
 		//printf("L: %u, R: %u \n\r", adc_l, adc_r);
-		_delay_ms(10);
+		//_delay_ms(10);
 
-		
 	}
 }
  
