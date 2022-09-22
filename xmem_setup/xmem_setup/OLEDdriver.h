@@ -10,14 +10,35 @@
 
 #include "XMEMdriver.h"
 
-#define OLED_COMMAND_BASE_ADDRESS 0x1000
-#define OLED_DATA_BASE_ADDRESS 0x1200
+#define OLED_COMMAND_BASE 0x1000
+#define OLED_DATA_BASE 0x1200
 
-void write_c ( uint8_t data );
+void OLED_init ( void );
 
-void oled_init ( void );
+void OLED_write_command ( uint8_t command );
 
+void OLED_write_data ( uint8_t data );
 
+// Recomended by lecturer
+void OLED_reset( void );
+
+void OLED_home( void );
+
+void OLED_goto_column ( uint8_t column );
+
+void OLED_goto_page ( uint8_t page );
+
+void OLED_clear_page( uint8_t page );
+
+void OLED_clear_screen( void );
+
+void OLED_goto_pos( uint8_t page, uint8_t column );
+
+void OLED_write_char( char c );
+
+void OLED_print( char* string );
+
+void OLED_set_brightness(uint8_t lvl );// Drawing functionsvoid OLED_print_arrow ( uint8_t page, uint8_t column );
 
 
 #endif /* OLEDDRIVER_H_ */

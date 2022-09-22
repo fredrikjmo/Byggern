@@ -99,16 +99,17 @@ pos_p pos_read(void){
 }
 
 direction direction_read (void){
-	if((posistion_percentage.x_axis < 5)&&(posistion_percentage.x_axis > -5)&&(posistion_percentage.y_axis < 5)&&(posistion_percentage.x_axis > -5))
-	return neutral;
+	if(abs(posistion_percentage.x_axis) < 5 && abs(posistion_percentage.y_axis) < 5)
+		return neutral;
 
-	if(abs(posistion_percentage.x_axis) <= abs(posistion_percentage.y_axis)){
+	if(abs(posistion_percentage.x_axis) < abs(posistion_percentage.y_axis)){
 		if(posistion_percentage.y_axis < 0)
-		return down;
+			return down;
 	return up;}
+	
 	else{
 		if(posistion_percentage.x_axis < 0)
-		return left;
+			return left;
 	return right;}
 }
 

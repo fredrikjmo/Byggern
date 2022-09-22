@@ -142,7 +142,19 @@
     <Compile Include="ADCdriver.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="fonts.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="mainmenu.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="mainmenu.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="node.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="OLEDdriver.c">
