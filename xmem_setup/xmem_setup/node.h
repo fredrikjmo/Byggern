@@ -9,13 +9,15 @@
 #ifndef NODE_H_
 #define NODE_H_
 
+#include <stdio.h>
+
 typedef struct Node {
 	struct Node* parent;
 	//struct Node* children[2] ;
-	struct Node* currentChild;
 	struct Node* next;
 	struct Node* prev;
 	char* name;
+	uint8_t index;
 } Node;
 
 #endif /* NODE_H_ */

@@ -15,8 +15,6 @@ uint8_t m_max_y_value = 0;
 uint8_t m_min_y_value = 255;
 uint8_t m_middle_y_value = 0;
 
-pos_p posistion_percentage;
-
 void adc_sample( void ){
 	
 	volatile char * ext_mem = ( char *) 0x1400;
@@ -82,6 +80,7 @@ void adc_calibrate( void ){
 
 pos_p pos_read(void){
 	
+	pos_p posistion_percentage;
 	int16_t adc_x = adc_read(0);
 	int16_t adc_y = adc_read(1);
 
@@ -99,6 +98,7 @@ pos_p pos_read(void){
 }
 
 direction direction_read (void){
+	pos_p posistion_percentage = pos_read();
 	if(abs(posistion_percentage.x_axis) < 5 && abs(posistion_percentage.y_axis) < 5)
 		return neutral;
 

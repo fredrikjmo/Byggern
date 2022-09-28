@@ -8,41 +8,32 @@
 #include "mainmenu.h"
 #include "OLEDdriver.h"
 #include "ADCdriver.h"
+#include "button.h"
 #include <stdio.h>
+
+void mainmenu_back (Node* currentNode){
+	if (currentNode->parent != NULL)
+		currentNode = currentNode->parent;
+}
+void mainmenu_print_current_menu ( Node* currentNode){
+	uint8_t index = currentNode->index;
+	OLED_clear_screen();
+	
+	while(1){
+		currentNode = currentNode->next;
+		OLED_goto_pos(currentNode->index, 20);
+		printf(currentNode->name);
+
+		if(index == currentNode->index)
+			break;
+	}
+}
 
 void mainmenu( void ){
 	
-	//Node mainNode;
-		//
-	//mainNode.name = "Main Menu";
-	//mainNode.next = NULL;
-	//mainNode.prev = NULL;
-	//mainNode.parent = NULL;
-	//
-//
-	////Initialize first child
-	//mainNode.children[0]->name = "First";
-	//mainNode.children[0]->next = mainNode.children[1];
-	//mainNode.children[0]->prev = mainNode.children[1];
-	//mainNode.children[0]->parent = &mainNode; 
-	//mainNode.children[0]->currentChild = NULL;
-	//mainNode.children[0]->children = { NULL };
-	//
-	////Initialize second child
-	//mainNode.children[1]->name = "Second";
-	//mainNode.children[1]->next = mainNode.children[0];
-	//mainNode.children[1]->prev = mainNode.children[0];
-	//mainNode.children[1]->parent = &mainNode;
-	//mainNode.children[1]->currentChild = NULL; 
-	//
-	//mainNode.currentChild = mainNode.children[0];
-	//
-//
-
-
 	Node MainNode;
 
-	//Initialize child-nodes
+	// Initialize child-nodes
 
 	Node FirstChild;
 	Node SecondChild;
@@ -51,20 +42,20 @@ void mainmenu( void ){
 	FirstChild.name = "First";
 	FirstChild.next = &SecondChild;
 	FirstChild.prev = &ThirdChild;
-	FirstChild.currentChild = NULL;
 	FirstChild.parent = &MainNode;
-
+	FirstChild.index = 0;
+	
 	SecondChild.name = "Second";
 	SecondChild.next = &ThirdChild;
 	SecondChild.prev = &FirstChild;
-	SecondChild.currentChild = NULL;
 	SecondChild.parent = &MainNode;
+	SecondChild.index = 1;
 
 	ThirdChild.name = "Third";
 	ThirdChild.next = &FirstChild;
 	ThirdChild.prev = &SecondChild;
-	ThirdChild.currentChild = NULL;
 	ThirdChild.parent = &MainNode;
+	ThirdChild.index = 2;
 
 
 	//Initialize MainMenu-node
@@ -72,47 +63,33 @@ void mainmenu( void ){
 	MainNode.name = "Main";
 	MainNode.next = NULL;
 	MainNode.prev = NULL;
-	MainNode.currentChild = &FirstChild;
+	Node* currentNode = &FirstChild;
 
-
-
-
-
-
-	//char * name = "Hadeland";
+	mainmenu_print_current_menu(currentNode);
+	
 	while (1)
-	{	
-		pos_p p = pos_read();
+	{
 		adc_calibrate();
+		
+		uint8_t btn_val = button_joystick_read();
 		direction dir = direction_read();
-		OLED_clear_screen();
-		OLED_goto_pos(4, 20);
+
+		if(dir == down){
+				OLED_clear_area(currentNode->index,4,17);
+				currentNode = currentNode->next;
+				OLED_print_penis(currentNode->index,4);
+			}
+
+		if ( dir == up ){
+				OLED_clear_area(currentNode->index,4,17);
+				currentNode = currentNode->prev;
+				OLED_print_penis(currentNode->index,4);
+			}
 		
-		if(dir == up){
-			
-			MainNode.currentChild = MainNode.currentChild->next;
+		OLED_clear_page(6);
+		OLED_goto_pos(6,5);
+		printf("Button Val: %u", btn_val);
 
-
-			//Node* buffernode =  mainNode.currentChild->next;
-			//mainNode.currentChild = buffernode;
-			//printf("up");
-			
-		}
-
-		if ( dir == down ){
-
-			MainNode.currentChild = MainNode.currentChild->prev;
-
-
-			//Node* buffernode =  mainNode.currentChild->prev;
-			//mainNode.currentChild = buffernode;
-			//printf("down");
-		}
-		
-		
-		printf(MainNode.currentChild->name);
-		//printf("   %d \n\r", dir);
-		
 		_delay_ms(200);
 	}
 }

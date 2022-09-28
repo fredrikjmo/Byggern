@@ -142,6 +142,12 @@
     <Compile Include="ADCdriver.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="button.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="button.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="fonts.h">
       <SubType>compile</SubType>
     </Compile>

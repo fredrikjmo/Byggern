@@ -69,6 +69,13 @@ void OLED_clear_page( uint8_t page ){
 	}
 }
 
+void OLED_clear_area( uint8_t page, uint8_t from_col, uint8_t to_col ){
+	OLED_goto_pos( page, from_col );
+	for ( uint8_t i = from_col; i < to_col; i++){
+		OLED_write_data(0);
+	}
+}
+
 void OLED_clear_screen( void ){
 	for ( uint8_t i = 0; i < 8; i++){
 		OLED_clear_page( i );
@@ -113,6 +120,23 @@ void OLED_print_arrow( uint8_t page, uint8_t column ){
 	OLED_write_data ( 0b00111100 );
 	OLED_write_data ( 0b00011000 );
 	OLED_write_data ( 0b00000000 );
+}
+
+
+void OLED_print_penis( uint8_t page, uint8_t column ){
+	OLED_goto_pos( page , column );
+	OLED_write_data ( 0b01100110 );
+	OLED_write_data ( 0b11111111 );
+	OLED_write_data ( 0b11111111 );
+	OLED_write_data ( 0b01111110 );
+	OLED_write_data ( 0b00011000 );
+	OLED_write_data ( 0b00011000 );
+	OLED_write_data ( 0b00011000 );
+	OLED_write_data ( 0b00011000 );
+	OLED_write_data ( 0b00011000 );
+	OLED_write_data ( 0b00111100 );
+	OLED_write_data ( 0b00111100 );
+	OLED_write_data ( 0b00011000 );
 }
 
 

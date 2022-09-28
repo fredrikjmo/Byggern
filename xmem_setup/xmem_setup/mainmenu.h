@@ -11,6 +11,10 @@
 
 #include "node.h"
 
+void mainmenu_back (Node* currentNode);
+
 void mainmenu( void );
+
+void mainmenu_print_current_menu ( Node* currentNode);
 
 #endif /* MAINMENU_H_ */
