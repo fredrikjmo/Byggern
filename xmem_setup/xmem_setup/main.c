@@ -13,60 +13,53 @@
 #include "USARTdriver.h"
 #include "OLEDdriver.h"
 #include "mainmenu.h"
+#include "SPI_driver.h"
+#include "MCP2515_driver.h"
+
 
 // USART_Init( MYUBRR );
 
 int main(void)
-{
+{	
 	xmem_init();
 	adc_init();
-	//USART_Init(MYUBRR);
+	USART_Init(MYUBRR);
 	
-	OLED_init();
-	OLED_clear_screen();
-	mainmenu();
+	MCP2515_init();
 	
-	//while(1){
-		//OLED_clear_screen();
-		//OLED_goto_pos(4, 20);
+	//OLED_init();
+	//OLED_clear_screen();
+	//mainmenu();
+	
+	//SPI_MasterInit();
+	
+	MCP2515_set_mode(MODE_LOOPBACK);
+	
+	
+	while(1)
+	{
+		//printf("hie");
+		//PORTB &= ~(1 << PB4 ); // Select CAN - controller, chip select SPI
 		//
-		//pos_p p = pos_read();
-		//adc_calibrate();
-		//direction dir = direction_read();
-		//
-		////printf("Dir: %d ", dir);
-	//
-//
-		//
-		//
-		//_delay_ms(40);
-	//
-	//}
-	//
-	
-	
-	
-	//while(1){
-		//OLED_clear_screen();
-		//adc_calibrate();
-		//pos_p p = pos_read();
-		//uint8_t l = pos_left_slider();		//uint8_t r = pos_right_slider();//
-		//OLED_goto_pos(0,0);
-		//printf("X: %d", p.x_axis);
-		//OLED_goto_pos(2,0);
-		//printf("Y: %d", p.y_axis);
-		//OLED_goto_pos(4,0);
-		//printf("Left: %d", l);
-		//OLED_goto_pos(5,0);
-		//printf("Right: %d", r);
-		//
-		//_delay_ms(40);
-	//}
-	
-			
-	
+		//SPI_write(0b10101010);
+		
 
-	
+		
+		//SPI_read();
+		
+		_delay_ms(200);
+		
+		
+		//SPI_read();
+		//
+		//_delay_ms(200);
+		//
+		//SPI_write(0xD);
+		//
+		//_delay_ms(200);
+		
+		
+	}
 		
 	
 

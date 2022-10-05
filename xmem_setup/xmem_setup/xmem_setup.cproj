@@ -160,6 +160,15 @@
     <Compile Include="mainmenu.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="MCP2515_constants.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCP2515_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="MCP2515_driver.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="node.h">
       <SubType>compile</SubType>
     </Compile>
@@ -167,6 +176,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="OLEDdriver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SPI_driver.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="SPI_driver.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="USARTdriver.c">
