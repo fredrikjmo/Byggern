@@ -7,22 +7,24 @@
 
 #include "MCP2515_driver.h"
 #include "SPI_driver.h"
+#include <avr/io.h>
+#include <avr/interrupt.h>
+#define F_CPU 4.9152E6
+
 #include <stdio.h>
 
 
 uint8_t  MCP2515_init(void)
-{
+{	
+	sei(); // Set Global Interrupt Enable bit
+	GICR |= ( 1 << INT0 ); // Set external interrupt request 0 Enable	
+	
 	uint8_t value = 0;
 	SPI_MasterInit (); // Initialize SPI
-	MCP251_reset (); // Send reset - command
+	MCP2515_reset (); // Send reset - command
 	
 	// Self - test
 	value = MCP2515_read ( MCP_CANSTAT );
-	
-	//printf( "value & mask %d", value & MODE_MASK);
-	//printf("\n\r");	
-	//printf( "mode_config %d", MODE_CONFIG);
-	//printf("\n\n\r");
 	
 	if (( value & MODE_MASK ) != MODE_CONFIG ) {
 		printf (" MCP2515 is NOT in configuration mode after reset !\n\r");
@@ -31,9 +33,12 @@ uint8_t  MCP2515_init(void)
 	}	printf("MCP in Config-mode\n\r");
 	
 	
+	//Enabling interrupts
 	
-	
-	
+	//set all TX-interrupt 
+	MCP2515_bit_modify(MCP_CANINTE, MCP_TX_MASK, MCP_TX_INT);
+	//set all RX-interrupts
+	MCP2515_bit_modify(MCP_CANINTE, MCP_RX_INT, MCP_RX_INT);
 	
 	
 	
@@ -44,7 +49,7 @@ uint8_t MCP2515_set_mode(uint8_t mode)
 {
 	uint8_t value = 0;
 	
-	MCP251_bit_modify(MCP_CANCTRL,MODE_MASK,mode);
+	MCP2515_bit_modify(MCP_CANCTRL,MODE_MASK,mode);
 	
 	value = MCP2515_read ( MCP_CANSTAT );
 	if (( value & MODE_MASK ) != mode ) {
@@ -78,7 +83,7 @@ uint8_t MCP2515_read(uint8_t address)
 }
 
 
-void MCP251_write(uint8_t address, uint8_t data)
+void MCP2515_write(uint8_t address, uint8_t data)
 {
 	PORTB &= ~(1 << PB4 ); // Select CAN - controller, chip select SPI
 	
@@ -91,7 +96,7 @@ void MCP251_write(uint8_t address, uint8_t data)
 	
 }
 
-void MCP251_request_to_send(uint8_t MCP_RTS_N)
+void MCP2515_request_to_send(uint8_t MCP_RTS_N)
 {
 	PORTB &= ~(1 << PB4 ); // Select CAN - controller, chip select SPI
 	
@@ -101,12 +106,12 @@ void MCP251_request_to_send(uint8_t MCP_RTS_N)
 	
 }
 
-void MCP251_bit_modify(uint8_t address, uint8_t mask, uint8_t data)
+void MCP2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data)
 {
 	
 	PORTB &= ~(1 << PB4 ); // Select CAN - controller, chip select SPI
 	
-	SPI_write(MCP_BITMOD);   //Send RTS - instruction
+	SPI_write(MCP_BITMOD);   //Send bit modify - instruction
 	SPI_write(address);		 //Send Address Byte
 	SPI_write(mask);		 //Send Mask Byte
 	SPI_write(data);		 //Send Data Byte
@@ -118,7 +123,7 @@ void MCP251_bit_modify(uint8_t address, uint8_t mask, uint8_t data)
 }
 
 
-void MCP251_reset(void)
+void MCP2515_reset(void)
 {
 	PORTB &= ~(1 << PB4 ); // Select CAN - controller, chip select SPI
 		
@@ -128,7 +133,7 @@ void MCP251_reset(void)
 	
 }
 
-uint8_t MCP251_read_status(void)
+uint8_t MCP2515_read_status(void)
 {
 	
 	uint8_t result;

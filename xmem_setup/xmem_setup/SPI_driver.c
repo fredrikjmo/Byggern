@@ -16,27 +16,17 @@ void SPI_MasterInit(void)
 	/* Enable SPI, Master, set clock rate fck/16 */
 	SPCR |= (1<<SPE)|(1<<MSTR)|(1<<SPR0);
 	
-	
-	//set CPOL and CPHA
-
-	
-	
 	//set MISO to input
-	DDRB &= ~(1<<DDB6);
-	
-	
+	DDRB &= ~(1<<DDB6);	
 }
 
 
 void SPI_write(uint8_t data)
 {
-	
 	/* Start transmission */
 	SPDR = data;
 	/* Wait for transmission complete */
 	while(!(SPSR & (1<<SPIF)));
-
-	
 }
 
 uint8_t SPI_read(void)

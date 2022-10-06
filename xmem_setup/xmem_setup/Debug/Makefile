@@ -39,6 +39,7 @@ SUBDIRS :=
 C_SRCS +=  \
 ../ADCdriver.c \
 ../button.c \
+../CANdriver.c \
 ../main.c \
 ../mainmenu.c \
 ../MCP2515_driver.c \
@@ -57,6 +58,7 @@ ASM_SRCS +=
 OBJS +=  \
 ADCdriver.o \
 button.o \
+CANdriver.o \
 main.o \
 mainmenu.o \
 MCP2515_driver.o \
@@ -68,6 +70,7 @@ XMEMdriver.o
 OBJS_AS_ARGS +=  \
 ADCdriver.o \
 button.o \
+CANdriver.o \
 main.o \
 mainmenu.o \
 MCP2515_driver.o \
@@ -79,6 +82,7 @@ XMEMdriver.o
 C_DEPS +=  \
 ADCdriver.d \
 button.d \
+CANdriver.d \
 main.d \
 mainmenu.d \
 MCP2515_driver.d \
@@ -90,6 +94,7 @@ XMEMdriver.d
 C_DEPS_AS_ARGS +=  \
 ADCdriver.d \
 button.d \
+CANdriver.d \
 main.d \
 mainmenu.d \
 MCP2515_driver.d \
@@ -120,6 +125,13 @@ LINKER_SCRIPT_DEP+=
 	
 
 ./button.o: .././button.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega162 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega162" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./CANdriver.o: .././CANdriver.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega162 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega162" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

@@ -18,18 +18,18 @@ uint8_t MCP2515_read(uint8_t address);
 uint8_t MCP2515_set_mode(uint8_t mode);
 
 
-void MCP251_write(uint8_t address, uint8_t data);
+void MCP2515_write(uint8_t address, uint8_t data);
 
 
-void MCP251_request_to_send(uint8_t MCP_RTS_N);
+void MCP2515_request_to_send(uint8_t MCP_RTS_N);
 
-void MCP251_bit_modify(uint8_t address, uint8_t mask, uint8_t data);
-
-
-void MCP251_reset(void);
+void MCP2515_bit_modify(uint8_t address, uint8_t mask, uint8_t data);
 
 
-uint8_t MCP251_read_status(void);
+void MCP2515_reset(void);
+
+
+uint8_t MCP2515_read_status(void);
 
 
 

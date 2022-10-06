@@ -6,6 +6,8 @@ ADCdriver.c
 
 button.c
 
+CANdriver.c
+
 main.c
 
 mainmenu.c
