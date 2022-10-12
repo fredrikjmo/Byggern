@@ -6,11 +6,17 @@ ADCdriver.c
 
 button.c
 
+CANdriver.c
+
 main.c
 
 mainmenu.c
 
+MCP2515_driver.c
+
 OLEDdriver.c
+
+SPI_driver.c
 
 USARTdriver.c
 
