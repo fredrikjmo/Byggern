@@ -12,6 +12,8 @@ Device_Startup\system_sam3xa.c
 
 main.c
 
+Servo_and _IR\PWM.c
+
 uart_and_printf\printf-stdarg.c
 
 uart_and_printf\uart.c

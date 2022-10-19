@@ -10,6 +10,7 @@
 #include "uart_and_printf/printf-stdarg.h"
 #include "can_node_2/can_controller.h"
 #include "can_node_2/can_interrupt.h"
+#include "Servo_and _IR/PWM.h"
 
 #define can_br 0x01141255 
 int main(void)
@@ -18,7 +19,7 @@ int main(void)
     SystemInit();
 	configure_uart();
 	can_init_def_tx_rx_mb(can_br);
-	
+	PWM_init();
 	
 	
 	WDT->WDT_MR = WDT_MR_WDDIS; // Disable WDT
