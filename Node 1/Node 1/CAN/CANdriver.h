@@ -11,9 +11,14 @@
 
 #include "../MCP2515/MCP2515_constants.h"
 #include "../MCP2515/MCP2515_driver.h"
+#include "../ADC/ADCdriver.h"
+
 
 void CAN_transmit ( uint8_t IDH, uint8_t IDL, uint8_t data );
 
 uint8_t CAN_receive ( void );
+
+void CAN_send_joystick_direction (void);
+
 
 #endif /* CANDRIVER_H_ */
