@@ -1,5 +1,5 @@
-can_node_2/can_interrupt.d can_node_2/can_interrupt.o: \
- ../can_node_2/can_interrupt.c ../can_node_2/can_interrupt.h \
+motor/motor_controller.d motor/motor_controller.o: \
+ ../motor/motor_controller.c ../motor/motor_controller.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\newlib.h \
@@ -105,14 +105,9 @@ can_node_2/can_interrupt.d can_node_2/can_interrupt.o: \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/instance/wdt.h \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/instance/rtc.h \
  C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/instance/gpbr.h \
- C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/pio/sam3x8e.h \
- ../can_node_2/../uart_and_printf/printf-stdarg.h \
- ../can_node_2/can_controller.h \
- ../can_node_2/../Servo_and\ _IR/servocontrol.h \
- ../can_node_2/../Servo_and\ _IR/PWM.h \
- ../can_node_2/../motor/motor_controller.h
+ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/pio/sam3x8e.h
 
-../can_node_2/can_interrupt.h:
+../motor/motor_controller.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\stdio.h:
 
@@ -325,13 +320,3 @@ C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/i
 C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/instance/gpbr.h:
 
 C:\Program\ Files\ (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include/pio/sam3x8e.h:
-
-../can_node_2/../uart_and_printf/printf-stdarg.h:
-
-../can_node_2/can_controller.h:
-
-../can_node_2/../Servo_and\ _IR/servocontrol.h:
-
-../can_node_2/../Servo_and\ _IR/PWM.h:
-
-../can_node_2/../motor/motor_controller.h:

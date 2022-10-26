@@ -17,6 +17,7 @@
 
 #include "can_controller.h"
 #include "../Servo_and _IR/servocontrol.h"
+#include "../motor/motor_controller.h"
 
 #define DEBUG_INTERRUPT 0
 
@@ -41,10 +42,11 @@ void CAN0_Handler( void )
 			can_receive(&message, 1);
 			for (int i = 0; i< message.data_length; i++)
 			{
-				//printf("data[%d] : %d \n\r", i, message.data[i]);
+				printf("data[%d] : %d \n\r", i, message.data[i]);
 			}
 			
-			set_servo_posistion(message.data[0]);
+			//set_servo_posistion(message.data[0]);
+			//joystick_horizontal_to_speed(message.data[0]);
 			
 
 		}

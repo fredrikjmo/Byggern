@@ -12,6 +12,8 @@ Device_Startup\system_sam3xa.c
 
 main.c
 
+motor\motor_controller.c
+
 Servo_and _IR\ADC.c
 
 Servo_and _IR\goal.c
