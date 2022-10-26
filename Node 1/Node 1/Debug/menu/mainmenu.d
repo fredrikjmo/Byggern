@@ -25,7 +25,7 @@ menu/mainmenu.d menu/mainmenu.o: ../menu/mainmenu.c \
  ../menu/../ADC/../CAN/../MCP2515/MCP2515_driver.h \
  ../menu/../ADC/../CAN/../MCP2515/../MCP2515/MCP2515_constants.h \
  ../menu/../ADC/../CAN/../MCP2515/../SPI/SPI_driver.h \
- ../menu/../button/button.h
+ ../menu/../ADC/../CAN/../ADC/ADCdriver.h ../menu/../button/button.h
 
 ../menu/../menu/mainmenu.h:
 
@@ -84,5 +84,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../menu/../ADC/../CAN/../MCP2515/../MCP2515/MCP2515_constants.h:
 
 ../menu/../ADC/../CAN/../MCP2515/../SPI/SPI_driver.h:
+
+../menu/../ADC/../CAN/../ADC/ADCdriver.h:
 
 ../menu/../button/button.h:

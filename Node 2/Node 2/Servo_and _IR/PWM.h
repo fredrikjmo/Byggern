@@ -13,6 +13,9 @@
 
 void PWM_init(void);
 
+void PWM_update_dutycycle(uint32_t percentage);
+
+
 
 
 

@@ -24,7 +24,8 @@ main.d main.o: .././main.c \
  .././ADC/../CAN/../MCP2515/MCP2515_constants.h \
  .././ADC/../CAN/../MCP2515/MCP2515_driver.h \
  .././ADC/../CAN/../MCP2515/../MCP2515/MCP2515_constants.h \
- .././ADC/../CAN/../MCP2515/../SPI/SPI_driver.h .././USART/USARTdriver.h \
+ .././ADC/../CAN/../MCP2515/../SPI/SPI_driver.h \
+ .././ADC/../CAN/../ADC/ADCdriver.h .././USART/USARTdriver.h \
  .././OLED/OLEDdriver.h .././OLED/../XMEM/XMEMdriver.h \
  .././menu/mainmenu.h .././menu/node.h .././MCP2515/MCP2515_constants.h \
  .././MCP2515/MCP2515_driver.h \
@@ -85,6 +86,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././ADC/../CAN/../MCP2515/../MCP2515/MCP2515_constants.h:
 
 .././ADC/../CAN/../MCP2515/../SPI/SPI_driver.h:
+
+.././ADC/../CAN/../ADC/ADCdriver.h:
 
 .././USART/USARTdriver.h:
 

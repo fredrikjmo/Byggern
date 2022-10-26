@@ -42,9 +42,9 @@ void adc_calibrate( void );
 
 uint8_t adc_read ( uint8_t channel );
 
-pos_p pos_read(void);uint8_t pos_left_slider(void);uint8_t pos_right_slider(void);direction direction_read (void);
+pos_p pos_read(void);direction direction_read (void);uint8_t pos_left_slider(void);uint8_t pos_right_slider(void);void joystick_direction_to_CAN (void);
 
-void can_send_direction (void);
+void joystick_horizontal_percentage_to_CAN (void);
 
 
 #endif /* ADCDRIVER_H_ */

@@ -47,6 +47,7 @@ C_SRCS +=  \
 ../Device_Startup/system_sam3xa.c \
 ../main.c \
 ../Servo_and\ _IR/PWM.c \
+../Servo_and\ _IR/servoControl.c \
 ../uart_and_printf/printf-stdarg.c \
 ../uart_and_printf/uart.c
 
@@ -64,6 +65,7 @@ Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
 main.o \
 Servo_and\ _IR/PWM.o \
+Servo_and\ _IR/servoControl.o \
 uart_and_printf/printf-stdarg.o \
 uart_and_printf/uart.o
 
@@ -74,6 +76,7 @@ Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
 main.o \
 "Servo_and _IR/PWM.o" \
+"Servo_and _IR/servoControl.o" \
 uart_and_printf/printf-stdarg.o \
 uart_and_printf/uart.o
 
@@ -84,6 +87,7 @@ Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
 main.d \
 Servo_and\ _IR/PWM.d \
+Servo_and\ _IR/servoControl.d \
 uart_and_printf/printf-stdarg.d \
 uart_and_printf/uart.d
 
@@ -94,6 +98,7 @@ Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
 main.d \
 "Servo_and _IR/PWM.d" \
+"Servo_and _IR/servoControl.d" \
 uart_and_printf/printf-stdarg.d \
 uart_and_printf/uart.d
 
@@ -151,6 +156,13 @@ Device_Startup/system_sam3xa.o: ../Device_Startup/system_sam3xa.c
 	
 
 Servo_and\ _IR/PWM.o: ../Servo_and\ _IR/PWM.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Servo_and\ _IR/servoControl.o: ../Servo_and\ _IR/servoControl.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

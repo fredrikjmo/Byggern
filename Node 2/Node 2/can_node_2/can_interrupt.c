@@ -16,6 +16,7 @@
 #include "../uart_and_printf/printf-stdarg.h"
 
 #include "can_controller.h"
+#include "../Servo_and _IR/servocontrol.h"
 
 #define DEBUG_INTERRUPT 0
 
@@ -42,6 +43,9 @@ void CAN0_Handler( void )
 			{
 				printf("data[%d] : %d \n\r", i, message.data[i]);
 			}
+			
+			set_servo_posistion(message.data[0]);
+			
 
 		}
 		else if(can_sr & CAN_SR_MB2) //Mailbox 2 event

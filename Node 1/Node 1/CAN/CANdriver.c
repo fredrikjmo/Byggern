@@ -33,3 +33,11 @@ uint8_t CAN_receive ( void )
 	
 	return data;
 }
+
+void CAN_send_joystick_direction (void){
+	
+	direction joystick_dir = direction_read();
+	
+	CAN_transmit(0xFF, 0x0F, joystick_dir);
+	
+}

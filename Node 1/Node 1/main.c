@@ -77,10 +77,13 @@ int main(void)
 		
 		
 		direction dir = direction_read();
-		printf("Sent joystick dir: %d \n\r", dir);
+		pos_p p = pos_read();
+		
+		printf("Sent Value: %d \n\r", p.x_axis);
 	
-		can_send_direction();
-	
+		//joystick_direction_to_CAN();
+		
+		joystick_horizontal_percentage_to_CAN();
 		
 		_delay_ms(200);
 		

@@ -21,7 +21,8 @@ ADC/ADCdriver.d ADC/ADCdriver.o: ../ADC/ADCdriver.c ../ADC/ADCdriver.h \
  ../ADC/../CAN/CANdriver.h ../ADC/../CAN/../MCP2515/MCP2515_constants.h \
  ../ADC/../CAN/../MCP2515/MCP2515_driver.h \
  ../ADC/../CAN/../MCP2515/../MCP2515/MCP2515_constants.h \
- ../ADC/../CAN/../MCP2515/../SPI/SPI_driver.h
+ ../ADC/../CAN/../MCP2515/../SPI/SPI_driver.h \
+ ../ADC/../CAN/../ADC/ADCdriver.h
 
 ../ADC/ADCdriver.h:
 
@@ -72,3 +73,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../ADC/../CAN/../MCP2515/../MCP2515/MCP2515_constants.h:
 
 ../ADC/../CAN/../MCP2515/../SPI/SPI_driver.h:
+
+../ADC/../CAN/../ADC/ADCdriver.h:

@@ -12,6 +12,7 @@
 #include "can_node_2/can_interrupt.h"
 #include "Servo_and _IR/PWM.h"
 
+
 #define can_br 0x01141255 
 int main(void)
 {
@@ -31,6 +32,10 @@ int main(void)
     /* Replace with your application code */
     while (1) 
     {
+		
+		
+		
+	    
 		//printf("HELLOYYYYY\n\r");
     }
 }

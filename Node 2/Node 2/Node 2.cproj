@@ -186,6 +186,12 @@
     <Compile Include="Servo_and _IR\PWM.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Servo_and _IR\servoControl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Servo_and _IR\servoControl.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="uart_and_printf\printf-stdarg.c">
       <SubType>compile</SubType>
     </Compile>
