@@ -132,6 +132,8 @@ void joystick_direction_to_CAN (void){
 }
 
 void joystick_horizontal_percentage_to_CAN (void){
+	//Sends offsetted value between 0 and 100
+	
 	
 	pos_p posistion_percentage = pos_read();
 	
