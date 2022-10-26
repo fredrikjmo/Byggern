@@ -11,6 +11,9 @@
 #include "can_node_2/can_controller.h"
 #include "can_node_2/can_interrupt.h"
 #include "Servo_and _IR/PWM.h"
+#include "Servo_and _IR/ADC.h"
+#include <inttypes.h>
+#include "Servo_and _IR/goal.h"
 
 
 #define can_br 0x01141255 
@@ -21,6 +24,7 @@ int main(void)
 	configure_uart();
 	can_init_def_tx_rx_mb(can_br);
 	PWM_init();
+	ADC_init();
 	
 	
 	WDT->WDT_MR = WDT_MR_WDDIS; // Disable WDT
@@ -31,9 +35,12 @@ int main(void)
 	
     /* Replace with your application code */
     while (1) 
-    {
+    {	
+		//PWM_update_dutycycle(7);
 		
+		uint32_t goal_val = goal();
 		
+		printf("Is it a goal?: %d \r\n", goal_val);		
 		
 	    
 		//printf("HELLOYYYYY\n\r");

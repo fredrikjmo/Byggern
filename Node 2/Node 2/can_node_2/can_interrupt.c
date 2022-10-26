@@ -41,7 +41,7 @@ void CAN0_Handler( void )
 			can_receive(&message, 1);
 			for (int i = 0; i< message.data_length; i++)
 			{
-				printf("data[%d] : %d \n\r", i, message.data[i]);
+				//printf("data[%d] : %d \n\r", i, message.data[i]);
 			}
 			
 			set_servo_posistion(message.data[0]);

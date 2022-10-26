@@ -180,6 +180,18 @@
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Servo_and _IR\ADC.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Servo_and _IR\ADC.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Servo_and _IR\goal.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Servo_and _IR\goal.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Servo_and _IR\PWM.c">
       <SubType>compile</SubType>
     </Compile>

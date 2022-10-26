@@ -12,7 +12,7 @@ void set_servo_posistion(uint32_t joystick_percentage){
 	
 	uint32_t dutyCycle = joystick_percentage/20 + 5;
 	
-	printf("dutyculce %d \n\r", dutyCycle);
+	//printf("dutyculce %d \n\r", dutyCycle);
 	
 	
 	PWM_update_dutycycle(dutyCycle);

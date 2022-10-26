@@ -9,6 +9,7 @@
 
 #ifndef ADC_H_
 #define ADC_H_
+#include <stdio.h>
 
 void ADC_init ( void );
 

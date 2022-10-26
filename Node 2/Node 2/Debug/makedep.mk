@@ -12,6 +12,10 @@ Device_Startup\system_sam3xa.c
 
 main.c
 
+Servo_and _IR\ADC.c
+
+Servo_and _IR\goal.c
+
 Servo_and _IR\PWM.c
 
 Servo_and _IR\servoControl.c
