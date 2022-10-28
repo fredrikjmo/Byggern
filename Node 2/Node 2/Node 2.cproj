@@ -204,6 +204,12 @@
     <Compile Include="Servo_and _IR\servoControl.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="timer\timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="timer\timer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="uart_and_printf\printf-stdarg.c">
       <SubType>compile</SubType>
     </Compile>
@@ -220,6 +226,7 @@
   <ItemGroup>
     <Folder Include="Device_Startup\" />
     <Folder Include="can_node_2" />
+    <Folder Include="timer" />
     <Folder Include="Servo_and _IR" />
     <Folder Include="uart_and_printf" />
   </ItemGroup>

@@ -20,6 +20,8 @@ Servo_and _IR\PWM.c
 
 Servo_and _IR\servoControl.c
 
+timer\timer.c
+
 uart_and_printf\printf-stdarg.c
 
 uart_and_printf\uart.c

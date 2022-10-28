@@ -14,6 +14,7 @@
 #include "Servo_and _IR/ADC.h"
 #include <inttypes.h>
 #include "Servo_and _IR/goal.h"
+#include "timer/timer.h"
 
 
 #define can_br 0x01141255 
@@ -25,6 +26,7 @@ int main(void)
 	can_init_def_tx_rx_mb(can_br);
 	PWM_init();
 	ADC_init();
+	timer_init();
 	
 	
 	WDT->WDT_MR = WDT_MR_WDDIS; // Disable WDT
@@ -38,9 +40,14 @@ int main(void)
     {	
 		//PWM_update_dutycycle(7);
 		
-		uint32_t goal_val = goal();
+		//uint32_t goal_val = goal();
 		
-		printf("Is it a goal?: %d \r\n", goal_val);		
+		
+		printf("Hello \n\r");
+		delay_ms(2000);
+		printf("Heya!!!! \n\r");
+		delay_ms(2000);
+				
 		
 	    
 		//printf("HELLOYYYYY\n\r");
