@@ -1,7 +1,7 @@
 /*
  * timer.h
  *
- * Created: 27.10.2022 13:08:59
+ * Created: 28.10.2022 14:45:31
  *  Author: fjmo
  */ 
 
@@ -9,8 +9,13 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
-void timer_init(void);
+#include <stdint.h>
 
-void delay_ms(int delay);
+void timer_init( void );
+
+void delay_ms( int delay );
+
+void delay_us( int delay );
+
 
 #endif /* TIMER_H_ */
