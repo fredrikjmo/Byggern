@@ -11,17 +11,28 @@
 #include <stdio.h>
 
 void timer_init( void ){	
-	// Enable clock for TC0 in MPC
-
-
+	// Delay
 	PMC->PMC_PCR |= PMC_PCR_DIV_PERIPH_DIV_MCK | PMC_PCR_EN;
 	PMC->PMC_PCER0 |= PMC_PCER0_PID27;
 
 	REG_TC0_CMR0 |= TC_CMR_WAVE;
 	REG_TC0_CMR0 |= TC_CMR_CPCSTOP;
 	REG_TC0_CCR0 |= TC_CCR_CLKEN;
+	
+	
+	// Interrupt
+	NVIC_EnableIRQ(ID_TC1);
+	PMC->PMC_PCER0 |= PMC_PCER0_PID28;
 
+	REG_TC0_CMR1 |= TC_CMR_WAVE;
+	REG_TC0_CMR1 |= TC_CMR_TCCLKS_TIMER_CLOCK3;
+	REG_TC0_CMR1 |= TC_CMR_WAVSEL_UP_RC;
 
+	REG_TC0_CCR1 |= TC_CCR_CLKEN | TC_CCR_SWTRG;
+	
+	REG_TC0_IER1 = TC_IER_CPCS;
+
+	REG_TC0_RC1 = 262500;
 }
 
 void delay_ms( int delay ){

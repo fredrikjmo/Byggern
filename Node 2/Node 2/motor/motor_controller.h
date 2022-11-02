@@ -40,10 +40,15 @@ void set_joystick_horizontal_val(uint8_t val);
 void set_right_slider_val(uint8_t val);
 void set_right_button_val(uint8_t val);
 
+uint8_t get_joystick_horizontal_val(void);
+uint8_t get_right_slider_val(void);
+uint8_t get_right_button_val(void);
+
 void motor_init(void);
 void motor_disable_break(uint8_t bool);
 void motor_set_speed(uint32_t speed);
 void motor_set_direction(uint8_t dir);
+void motor_pid_controlled(void);
 
 void motor_encoder_reset(void);
 uint16_t motor_encoder_read(void);

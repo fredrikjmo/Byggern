@@ -36,6 +36,8 @@ SUBDIRS :=  \
 ../Device_Startup/ \
 ../can_node_2 \
 ../motor \
+../button \
+../pid \
 ../timer \
 ../Servo_and\ _IR \
 ../uart_and_printf
@@ -43,12 +45,14 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../button/button.c \
 ../can_node_2/can_controller.c \
 ../can_node_2/can_interrupt.c \
 ../Device_Startup/startup_sam3xa.c \
 ../Device_Startup/system_sam3xa.c \
 ../main.c \
 ../motor/motor_controller.c \
+../pid/pid.c \
 ../Servo_and\ _IR/ADC.c \
 ../Servo_and\ _IR/goal.c \
 ../Servo_and\ _IR/PWM.c \
@@ -65,12 +69,14 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+button/button.o \
 can_node_2/can_controller.o \
 can_node_2/can_interrupt.o \
 Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
 main.o \
 motor/motor_controller.o \
+pid/pid.o \
 Servo_and\ _IR/ADC.o \
 Servo_and\ _IR/goal.o \
 Servo_and\ _IR/PWM.o \
@@ -80,12 +86,14 @@ uart_and_printf/printf-stdarg.o \
 uart_and_printf/uart.o
 
 OBJS_AS_ARGS +=  \
+button/button.o \
 can_node_2/can_controller.o \
 can_node_2/can_interrupt.o \
 Device_Startup/startup_sam3xa.o \
 Device_Startup/system_sam3xa.o \
 main.o \
 motor/motor_controller.o \
+pid/pid.o \
 "Servo_and _IR/ADC.o" \
 "Servo_and _IR/goal.o" \
 "Servo_and _IR/PWM.o" \
@@ -95,12 +103,14 @@ uart_and_printf/printf-stdarg.o \
 uart_and_printf/uart.o
 
 C_DEPS +=  \
+button/button.d \
 can_node_2/can_controller.d \
 can_node_2/can_interrupt.d \
 Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
 main.d \
 motor/motor_controller.d \
+pid/pid.d \
 Servo_and\ _IR/ADC.d \
 Servo_and\ _IR/goal.d \
 Servo_and\ _IR/PWM.d \
@@ -110,12 +120,14 @@ uart_and_printf/printf-stdarg.d \
 uart_and_printf/uart.d
 
 C_DEPS_AS_ARGS +=  \
+button/button.d \
 can_node_2/can_controller.d \
 can_node_2/can_interrupt.d \
 Device_Startup/startup_sam3xa.d \
 Device_Startup/system_sam3xa.d \
 main.d \
 motor/motor_controller.d \
+pid/pid.d \
 "Servo_and _IR/ADC.d" \
 "Servo_and _IR/goal.d" \
 "Servo_and _IR/PWM.d" \
@@ -142,6 +154,13 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+button/button.o: ../button/button.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 can_node_2/can_controller.o: ../can_node_2/can_controller.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
@@ -178,6 +197,13 @@ Device_Startup/system_sam3xa.o: ../Device_Startup/system_sam3xa.c
 	
 
 motor/motor_controller.o: ../motor/motor_controller.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 6.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+pid/pid.o: ../pid/pid.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 6.3.1
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAM3X8E__ -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\CMSIS\5.4.0\CMSIS\Core\Include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAM3X_DFP\1.0.50\include"  -Og -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m3 -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

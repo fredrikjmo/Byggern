@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include "sam.h"
+#include "../button/button.h"
 
 #include "../uart_and_printf/printf-stdarg.h"
 
@@ -44,12 +45,13 @@ void CAN0_Handler( void )
 			set_joystick_horizontal_val(message.data[0]);
 			set_right_slider_val(message.data[1]);
 			set_right_button_val(message.data[2]);
+			set_button(message.data[2]);
 			
 			for (int i = 0; i< message.data_length; i++)
 			{
 				//printf("data[%d] : %d \n\r", i, message.data[i]);
 			}
-			
+
 			set_servo_posistion(message.data[0]);
 			//joystick_horizontal_to_speed(message.data[0]);
 			

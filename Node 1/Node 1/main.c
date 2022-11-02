@@ -64,6 +64,8 @@ int main(void)
 	
 	while(1)
 	{	
+		uint8_t joy = adc_direction_read();
+
 		adc_calibrate();
 		
 		interface_send_MFB_data_to_CAN();
