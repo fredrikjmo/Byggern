@@ -21,6 +21,7 @@
 #include "MCP2515/MCP2515_driver.h"
 #include "SPI/SPI_driver.h"
 #include "CAN/CANdriver.h"
+#include "Interface/Interface.h"
 
 uint8_t MCP_val_read;
 
@@ -64,26 +65,8 @@ int main(void)
 	while(1)
 	{	
 		adc_calibrate();
-		uint8_t interrupt_value;		
-		uint8_t MCP_val_send; 
-		//uint8_t MCP_val_read;
-	
-		MCP_val_send = 0b10011101; 
 		
-		//printf("___________1____________\n\n\r");
-		////Transmit Data
-		//CAN_transmit(0xFF, 0x0F, MCP_val_send);
-		//printf("Sent value: %d \n\r", MCP_val_send);
-		
-		
-		direction dir = direction_read();
-		pos_p p = pos_read();
-		
-		printf("Sent Value: %d \n\r", p.x_axis);
-	
-		//joystick_direction_to_CAN();
-		
-		joystick_horizontal_percentage_to_CAN();
+		interface_send_MFB_data_to_CAN();
 		
 		_delay_ms(200);
 		

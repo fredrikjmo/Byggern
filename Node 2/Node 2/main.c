@@ -15,6 +15,8 @@
 #include <inttypes.h>
 #include "Servo_and _IR/goal.h"
 #include "motor/motor_controller.h"
+#include "timer/timer.h"
+
 
 
 #define can_br 0x01141255 
@@ -24,6 +26,7 @@ int main(void)
     SystemInit();
 	configure_uart();
 	can_init_def_tx_rx_mb(can_br);
+	timer_init();
 	PWM_init();
 	ADC_init();
 	motor_init();
@@ -38,17 +41,19 @@ int main(void)
 	//motor_set_direction(1);
 	motor_disable_break(1);
     /* Replace with your application code */
+	//motor_encoder_reset();
     while (1) 
     {	
 		//PWM_update_dutycycle(7);
-		
-		uint32_t goal_val = goal();
-		
-		motor_set_speed(50);
-		
-		//printf("Is it a goal?: %d \r\n", goal_val);		
-		
-	    
-		//printf("HELLOYYYYY\n\r");
+		printf("HELLO\n\r");
+		delay_ms(3000);
+
+		//uint32_t goal_val = goal();
+		//
+		//motor_raw_dog();
+		//print_joy_h();
+		//motor_set_speed(50);
+		//uint16_t encoder_val = motor_encoder_read();
+		printf("HELff\n\r");
     }
 }

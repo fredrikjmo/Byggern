@@ -8,9 +8,9 @@
 #include <avr/io.h>
 
 void button_init ( void ){
-	DDRB |= (0<<DDB0); // Set Data Direction PB2 to Read (input). Used for button on joystick
+	DDRB |= (0<<DDB0); // Set Data Direction PB0 to Read (input). Used for left (?) button 
 }
 
-uint8_t button_joystick_read ( void ) {
-	return (PINB & 1<<PINB0); // Return value of PIN B2
+uint8_t button_right_read ( void ) {
+	return (PINB & 1<<PINB0); // Return value of PIN B0
 }

@@ -14,7 +14,7 @@
 #include "../ADC/ADCdriver.h"
 
 
-void CAN_transmit ( uint8_t IDH, uint8_t IDL, uint8_t data );
+void CAN_transmit ( uint8_t IDH, uint8_t IDL, uint8_t data1, uint8_t data2, uint8_t data3 );
 
 uint8_t CAN_receive ( void );
 

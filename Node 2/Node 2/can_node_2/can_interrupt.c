@@ -40,12 +40,17 @@ void CAN0_Handler( void )
 		if(can_sr & CAN_SR_MB1)  //Mailbox 1 event
 		{
 			can_receive(&message, 1);
+			
+			set_joystick_horizontal_val(message.data[0]);
+			set_right_slider_val(message.data[1]);
+			set_right_button_val(message.data[2]);
+			
 			for (int i = 0; i< message.data_length; i++)
 			{
-				printf("data[%d] : %d \n\r", i, message.data[i]);
+				//printf("data[%d] : %d \n\r", i, message.data[i]);
 			}
 			
-			//set_servo_posistion(message.data[0]);
+			set_servo_posistion(message.data[0]);
 			//joystick_horizontal_to_speed(message.data[0]);
 			
 
