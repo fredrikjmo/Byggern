@@ -12,8 +12,8 @@
 
 #define T_ms	100
 
-#define K_p		2.8
-#define K_i		0.7
+#define K_p		0.8
+#define K_i		0.1
 
 void pid_update_e (void);
 void pid_update_u (void);

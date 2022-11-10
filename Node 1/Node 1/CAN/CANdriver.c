@@ -32,6 +32,7 @@ uint8_t CAN_receive ( void )
 	IDL = MCP2515_read(MCP_RXB0SIDL);
 	data_length = MCP2515_read(MCP_RXB0DLC);
 	data = MCP2515_read(MCP_RXB0D0);
+
 	
 	return data;
 }

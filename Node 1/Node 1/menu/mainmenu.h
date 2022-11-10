@@ -17,4 +17,6 @@ void mainmenu( void );
 
 void mainmenu_print_current_menu ( Node* currentNode);
 
+void mainmenu_play_game();
+
 #endif /* MAINMENU_H_ */

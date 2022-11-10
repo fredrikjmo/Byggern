@@ -35,6 +35,5 @@ void interface_send_MFB_data_to_CAN (void){
 	uint8_t right_slider_posistion_percentage = adc_pos_right_slider();
 	
 	uint8_t right_button_val = button_right_read();
-	printf("PWM: %d \n\r",joystick_PWM_percentage);
 	CAN_transmit(0xFF, 0x0F, joystick_PWM_percentage, right_slider_posistion_percentage, right_button_val);
 }

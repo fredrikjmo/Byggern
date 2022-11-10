@@ -49,11 +49,10 @@ void CAN0_Handler( void )
 			
 			for (int i = 0; i< message.data_length; i++)
 			{
-				//printf("data[%d] : %d \n\r", i, message.data[i]);
 			}
 
-			set_servo_posistion(message.data[0]);
-			//joystick_horizontal_to_speed(message.data[0]);
+			set_servo_posistion(message.data[1]);
+
 			
 
 		}

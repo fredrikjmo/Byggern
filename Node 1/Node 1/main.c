@@ -35,13 +35,10 @@ ISR(INT0_vect)
 	
 	volatile uint8_t interrupt_value;
 	interrupt_value = MCP2515_read( MCP_CANINTF );
-	
-	MCP2515_bit_modify(MCP_CANINTF, interrupt_value, 0x00);
-	
-	//printf("Interrupt value: %d \n\r", interrupt_value);
-	
 	MCP_val_read = CAN_receive();
 
+	MCP2515_bit_modify(MCP_CANINTF, 0xFF, 0x00);
+	
 }
 
 
@@ -49,29 +46,20 @@ int main(void)
 {	
 	xmem_init();
 	adc_init();
-	USART_Init(MYUBRR);
+	//USART_Init(MYUBRR);
 	
 	MCP2515_init();
+	MCP2515_set_mode(MODE_NORMAL);
+
 	
-	//OLED_init();
-	//OLED_clear_screen();
-	//mainmenu();
+	OLED_init();
+	OLED_clear_screen();
 	
+	
+	mainmenu();
+	//
 	//SPI_MasterInit();
 	
-	MCP2515_set_mode(MODE_NORMAL);
-	
-	
-	while(1)
-	{	
-		uint8_t joy = adc_direction_read();
 
-		adc_calibrate();
-		
-		interface_send_MFB_data_to_CAN();
-		
-		_delay_ms(200);
-		
-	}
 }
  

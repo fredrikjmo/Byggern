@@ -25,7 +25,7 @@ void pid_update_e (void){
 	e_i += e;
 	uint16_t encoder_val = motor_encoder_read();
 	if(encoder_val > 10000) encoder_val = 0;
-	e = get_right_slider_val()-(100-(encoder_val*100)/9010);
+	e = get_joystick_horizontal_val()-(100-(encoder_val*100)/9010);
 }
 
 void pid_update_u (void){

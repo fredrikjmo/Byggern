@@ -11,6 +11,8 @@
 
 #include <stdio.h>
 
+typedef void (*functionPtr)(void);
+
 typedef struct Node {
 	struct Node* parent;
 	//struct Node* children[2] ;
@@ -18,6 +20,9 @@ typedef struct Node {
 	struct Node* prev;
 	char* name;
 	uint8_t index;
+	functionPtr nodeFunction;
 } Node;
+
+
 
 #endif /* NODE_H_ */

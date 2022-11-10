@@ -32,7 +32,7 @@ void timer_init( void ){
 	
 	REG_TC0_IER1 = TC_IER_CPCS;
 
-	REG_TC0_RC1 = 262500;
+	REG_TC0_RC1 = 26250;
 }
 
 void delay_ms( int delay ){

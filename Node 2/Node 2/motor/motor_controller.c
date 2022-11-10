@@ -123,6 +123,8 @@ void DAC_init(void){
 void motor_set_speed(uint32_t percentage){
 
 	uint32_t digitalspeed = ((percentage))*0x1C ;
+	
+	if(digitalspeed != 0) digitalspeed += 40*0x1C;
 
 	//set conversion reg in DAC
 	DACC->DACC_CDR = digitalspeed;	
