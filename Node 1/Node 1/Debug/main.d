@@ -31,7 +31,7 @@ main.d main.o: .././main.c \
  .././MCP2515/MCP2515_driver.h \
  .././MCP2515/../MCP2515/MCP2515_constants.h \
  .././MCP2515/../SPI/SPI_driver.h .././SPI/SPI_driver.h \
- .././CAN/CANdriver.h
+ .././CAN/CANdriver.h .././Interface/Interface.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
 
@@ -110,3 +110,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././SPI/SPI_driver.h:
 
 .././CAN/CANdriver.h:
+
+.././Interface/Interface.h:

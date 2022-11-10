@@ -38,6 +38,7 @@ SUBDIRS :=  \
 ../CAN/ \
 ../MCP2515 \
 ../menu \
+../Interface \
 ../XMEM \
 ../USART \
 ../SPI \
@@ -49,6 +50,7 @@ C_SRCS +=  \
 ../ADC/ADCdriver.c \
 ../button/button.c \
 ../CAN/CANdriver.c \
+../Interface/interface.c \
 ../main.c \
 ../MCP2515/MCP2515_driver.c \
 ../menu/mainmenu.c \
@@ -69,6 +71,7 @@ OBJS +=  \
 ADC/ADCdriver.o \
 button/button.o \
 CAN/CANdriver.o \
+Interface/interface.o \
 main.o \
 MCP2515/MCP2515_driver.o \
 menu/mainmenu.o \
@@ -82,6 +85,7 @@ OBJS_AS_ARGS +=  \
 ADC/ADCdriver.o \
 button/button.o \
 CAN/CANdriver.o \
+Interface/interface.o \
 main.o \
 MCP2515/MCP2515_driver.o \
 menu/mainmenu.o \
@@ -95,6 +99,7 @@ C_DEPS +=  \
 ADC/ADCdriver.d \
 button/button.d \
 CAN/CANdriver.d \
+Interface/interface.d \
 main.d \
 MCP2515/MCP2515_driver.d \
 menu/mainmenu.d \
@@ -108,6 +113,7 @@ C_DEPS_AS_ARGS +=  \
 ADC/ADCdriver.d \
 button/button.d \
 CAN/CANdriver.d \
+Interface/interface.d \
 main.d \
 MCP2515/MCP2515_driver.d \
 menu/mainmenu.d \
@@ -146,6 +152,13 @@ button/button.o: ../button/button.c
 	
 
 CAN/CANdriver.o: ../CAN/CANdriver.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega162 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega162" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Interface/interface.o: ../Interface/interface.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega162 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega162" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

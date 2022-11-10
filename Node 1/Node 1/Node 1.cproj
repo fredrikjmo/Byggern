@@ -154,6 +154,12 @@
     <Compile Include="CAN\CANdriver.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Interface\interface.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Interface\Interface.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
@@ -212,6 +218,7 @@
     <Folder Include="CAN\" />
     <Folder Include="MCP2515" />
     <Folder Include="menu" />
+    <Folder Include="Interface" />
     <Folder Include="XMEM" />
     <Folder Include="USART" />
     <Folder Include="SPI" />

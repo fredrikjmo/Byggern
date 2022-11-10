@@ -78,7 +78,7 @@ void adc_calibrate( void ){
 	m_min_y_value = adc_y;
 }
 
-pos_p pos_read(void){
+pos_p adc_pos_read(void){
 	
 	pos_p posistion_percentage;
 	int16_t adc_x = adc_read(0);
@@ -97,8 +97,8 @@ pos_p pos_read(void){
 	return posistion_percentage;
 }
 
-direction direction_read (void){
-	pos_p posistion_percentage = pos_read();
+direction adc_direction_read (void){
+	pos_p posistion_percentage = adc_pos_read();
 	if(abs(posistion_percentage.x_axis) < 5 && abs(posistion_percentage.y_axis) < 5)
 		return neutral;
 
@@ -116,37 +116,8 @@ direction direction_read (void){
 
 
 
-uint8_t pos_left_slider(void){	uint8_t L_slider = adc_read(2);	return 100*L_slider/255;}uint8_t pos_right_slider(void){
+uint8_t adc_pos_left_slider(void){	uint8_t L_slider = adc_read(2);	return 100*L_slider/255;}uint8_t adc_pos_right_slider(void){
 
 	uint8_t R_slider = adc_read(3);
 	return 100*R_slider/255;
-}
-
-
-void joystick_direction_to_CAN (void){
-	
-	direction joystick_dir = direction_read();
-	
-	CAN_transmit(0xFF, 0x0F, joystick_dir);
-	
-}
-
-void joystick_horizontal_percentage_to_CAN (void){
-	//Sends offsetted value between 0 and 100
-	
-	
-	pos_p posistion_percentage = pos_read();
-	
-	uint8_t PWM_percentage = (posistion_percentage.x_axis + 100)/2;
-	
-	//if(abs(posistion_percentage.x_axis) < 5 && abs(posistion_percentage.y_axis) < 5)
-		//CAN_transmit(0xFF, 0x0F, 100);
-
-
-	//else{
-		//CAN_transmit(0xFF, 0x0F, PWM_percentage);
-	//}
-		
-		CAN_transmit(0xFF, 0x0F, PWM_percentage);
-	
 }

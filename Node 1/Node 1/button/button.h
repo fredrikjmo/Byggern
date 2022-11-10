@@ -11,6 +11,6 @@
 #include <stdio.h>
 void button_init ( void );
 
-uint8_t button_joystick_read ( void );
+uint8_t button_right_read ( void );
 
 #endif /* BUTTON_H_ */

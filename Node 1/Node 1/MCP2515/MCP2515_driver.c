@@ -30,7 +30,7 @@ uint8_t  MCP2515_init(void)
 		printf (" MCP2515 is NOT in configuration mode after reset !\n\r");
 		return 1;
 		
-	}	printf("MCP in Config-mode\n\r");
+	}	//printf("MCP in Config-mode\n\r");
 	
 	//Set Bit timing
 	//MCK = 16 MHz
@@ -71,7 +71,7 @@ uint8_t MCP2515_set_mode(uint8_t mode)
 		printf (" mcp2515 is not changed to desired mode !\n\r");
 		return 1;
 		
-	}		printf("MCP successfully changed mode\n\r");
+	}		//printf("MCP successfully changed mode\n\r");
 	
 	return 0;
 	

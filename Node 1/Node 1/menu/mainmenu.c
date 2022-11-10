@@ -15,6 +15,7 @@ void mainmenu_back (Node* currentNode){
 	if (currentNode->parent != NULL)
 		currentNode = currentNode->parent;
 }
+
 void mainmenu_print_current_menu ( Node* currentNode){
 	uint8_t index = currentNode->index;
 	OLED_clear_screen();
@@ -29,6 +30,31 @@ void mainmenu_print_current_menu ( Node* currentNode){
 	}
 }
 
+
+
+void mainmenu_play_game(){
+	OLED_clear_screen();
+	OLED_goto_pos(6, 20);
+	printf("playing");
+	while(1){
+		//uint8_t can_data = CAN_receive();
+		//if(can_data == 1){break;}
+
+		uint8_t joy = adc_direction_read();
+		adc_calibrate();
+		interface_send_MFB_data_to_CAN();
+		_delay_ms(200);
+	}
+
+	OLED_clear_screen();
+	return;
+}
+
+void mainmenu_enter_childNode(Node* currentNode){
+	if(currentNode->nodeFunction!= NULL){
+		currentNode->nodeFunction();}
+}
+
 void mainmenu( void ){
 	
 	Node MainNode;
@@ -39,23 +65,26 @@ void mainmenu( void ){
 	Node SecondChild;
 	Node ThirdChild;
 
-	FirstChild.name = "First";
+	FirstChild.name = "Play game";
 	FirstChild.next = &SecondChild;
 	FirstChild.prev = &ThirdChild;
 	FirstChild.parent = &MainNode;
 	FirstChild.index = 0;
+	FirstChild.nodeFunction = mainmenu_play_game;
 	
-	SecondChild.name = "Second";
+	SecondChild.name = "Settings";
 	SecondChild.next = &ThirdChild;
 	SecondChild.prev = &FirstChild;
 	SecondChild.parent = &MainNode;
 	SecondChild.index = 1;
+	FirstChild.nodeFunction = NULL;
 
-	ThirdChild.name = "Third";
+	ThirdChild.name = "Quit";
 	ThirdChild.next = &FirstChild;
 	ThirdChild.prev = &SecondChild;
 	ThirdChild.parent = &MainNode;
 	ThirdChild.index = 2;
+	FirstChild.nodeFunction = NULL;
 
 
 	//Initialize MainMenu-node
@@ -65,14 +94,15 @@ void mainmenu( void ){
 	MainNode.prev = NULL;
 	Node* currentNode = &FirstChild;
 
+	OLED_clear_screen();
 	mainmenu_print_current_menu(currentNode);
 	
 	while (1)
 	{
 		adc_calibrate();
 		
-		uint8_t btn_val = button_joystick_read();
-		direction dir = direction_read();
+		uint8_t btn_val = button_right_read();
+		direction dir = adc_direction_read();
 
 		if(dir == down){
 				OLED_clear_area(currentNode->index,4,17);
@@ -85,6 +115,11 @@ void mainmenu( void ){
 				currentNode = currentNode->prev;
 				OLED_print_penis(currentNode->index,4);
 			}
+			
+		if (btn_val == 1 && currentNode == &FirstChild)
+		{
+			mainmenu_play_game();
+		}
 		
 		OLED_clear_page(6);
 		OLED_goto_pos(6,5);

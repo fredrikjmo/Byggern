@@ -14,6 +14,12 @@
 #include "Servo_and _IR/ADC.h"
 #include <inttypes.h>
 #include "Servo_and _IR/goal.h"
+#include "motor/motor_controller.h"
+#include "timer/timer.h"
+#include "pid/pid.h"
+#include "button/button.h"
+#include <stdio.h>
+
 
 
 #define can_br 0x01141255 
@@ -23,26 +29,36 @@ int main(void)
     SystemInit();
 	configure_uart();
 	can_init_def_tx_rx_mb(can_br);
+	timer_init();
 	PWM_init();
 	ADC_init();
+	motor_init();
+	DAC_init();
+	button_init();
 	
 	
 	WDT->WDT_MR = WDT_MR_WDDIS; // Disable WDT
 	
 	PIOA->PIO_OER = PIO_OER_P19 | PIO_OER_P20; // Output enable on PA19 and PA20
+
 	
 	PIOA->PIO_SODR = PIO_SODR_P19; // | PIO_SODR_P20; // Set PA19 and PA20 high ( Turn on both leds ) 
-	
+	//motor_set_direction(1);
+	motor_disable_break(1);
     /* Replace with your application code */
+	//motor_encoder_reset();
     while (1) 
     {	
-		//PWM_update_dutycycle(7);
-		
-		uint32_t goal_val = goal();
-		
-		printf("Is it a goal?: %d \r\n", goal_val);		
-		
-	    
-		//printf("HELLOYYYYY\n\r");
+		//motor_raw_dog();
+		motor_pid_controlled();
+		if(goal()){
+			CAN_MESSAGE* message;
+			message->data[0] = 1;
+			message->data_length = 1;
+			message->id = 1;
+			//can_send(message,0);}
+	}
+			//printf("Hey, you lost!\n\r");
+		//}else {printf("Still playing\n\r");}
     }
 }
