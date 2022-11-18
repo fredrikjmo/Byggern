@@ -54,7 +54,6 @@ C_SRCS +=  \
 ../main.c \
 ../MCP2515/MCP2515_driver.c \
 ../menu/mainmenu.c \
-../menu/node.c \
 ../OLED/OLEDdriver.c \
 ../SPI/SPI_driver.c \
 ../USART/USARTdriver.c \
@@ -75,7 +74,6 @@ Interface/interface.o \
 main.o \
 MCP2515/MCP2515_driver.o \
 menu/mainmenu.o \
-menu/node.o \
 OLED/OLEDdriver.o \
 SPI/SPI_driver.o \
 USART/USARTdriver.o \
@@ -89,7 +87,6 @@ Interface/interface.o \
 main.o \
 MCP2515/MCP2515_driver.o \
 menu/mainmenu.o \
-menu/node.o \
 OLED/OLEDdriver.o \
 SPI/SPI_driver.o \
 USART/USARTdriver.o \
@@ -103,7 +100,6 @@ Interface/interface.d \
 main.d \
 MCP2515/MCP2515_driver.d \
 menu/mainmenu.d \
-menu/node.d \
 OLED/OLEDdriver.d \
 SPI/SPI_driver.d \
 USART/USARTdriver.d \
@@ -117,7 +113,6 @@ Interface/interface.d \
 main.d \
 MCP2515/MCP2515_driver.d \
 menu/mainmenu.d \
-menu/node.d \
 OLED/OLEDdriver.d \
 SPI/SPI_driver.d \
 USART/USARTdriver.d \
@@ -180,13 +175,6 @@ MCP2515/MCP2515_driver.o: ../MCP2515/MCP2515_driver.c
 	
 
 menu/mainmenu.o: ../menu/mainmenu.c
-	@echo Building file: $<
-	@echo Invoking: AVR/GNU C Compiler : 5.4.0
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega162 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega162" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
-	@echo Finished building: $<
-	
-
-menu/node.o: ../menu/node.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega162 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega162" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

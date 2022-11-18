@@ -27,5 +27,7 @@ CAN_MESSAGE CAN_receive ( void );
 
 void CAN_send_joystick_direction (void);
 
+CAN_MESSAGE get_MCP_val_read( void );
+
 
 #endif /* CANDRIVER_H_ */

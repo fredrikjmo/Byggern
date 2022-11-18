@@ -36,8 +36,8 @@ void mainmenu_play_game(){
 	OLED_goto_pos(6, 20);
 	printf("playing");
 	while(1){
-		//uint8_t can_data = CAN_receive();
-		//if(can_data == 1){break;}
+		CAN_MESSAGE can_data = get_MCP_val_read();
+		if(can_data.data[0] == 1){break;}
 
 		uint8_t joy = adc_direction_read();
 		adc_calibrate();

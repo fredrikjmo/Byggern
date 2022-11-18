@@ -7,10 +7,22 @@
 
 #include "CANdriver.h"
 
+
+CAN_MESSAGE MCP_val_read;
+
+// Interrupt vector for INT0
+ISR(INT0_vect)
+{
+	volatile uint8_t interrupt_value;
+	interrupt_value = MCP2515_read( MCP_CANINTF );
+	MCP_val_read = CAN_receive();
+	MCP2515_bit_modify(MCP_CANINTF, 0xFF, 0x00);
+}
+
+CAN_MESSAGE get_MCP_val_read( void ) {return MCP_val_read;}
+
 void CAN_transmit ( CAN_MESSAGE message )
 {
-	CAN_MESSAGE message;
-
 	uint8_t IDH = (uint8_t)(message.id >> 8);
 	uint8_t IDL = (uint8_t)(0xFF & message.id);
 
@@ -28,12 +40,12 @@ void CAN_transmit ( CAN_MESSAGE message )
 	MCP2515_request_to_send(MCP_RTS_TX0);
 }
 
-uint8_t CAN_receive ( void )
+CAN_MESSAGE CAN_receive ( void )
 {
 	CAN_MESSAGE message;
 	
-	IDH = MCP2515_read(MCP_RXB0SIDH);
-	IDL = MCP2515_read(MCP_RXB0SIDL);
+	uint8_t IDH = MCP2515_read(MCP_RXB0SIDH);
+	uint8_t IDL = MCP2515_read(MCP_RXB0SIDL);
 
 	message.id = (IDH << 8) & IDL;
 
@@ -45,7 +57,7 @@ uint8_t CAN_receive ( void )
 	}
 
 	//clear interrupt flags RX0
-	mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF, 0);
+	MCP2515_bit_modify(MCP_CANINTF, MCP_RX0IF, 0);
 	
 	return message;
 }
