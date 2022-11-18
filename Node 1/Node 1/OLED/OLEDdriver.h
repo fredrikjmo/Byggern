@@ -20,9 +20,6 @@ void OLED_write_command ( uint8_t command );
 void OLED_write_data ( uint8_t data );
 
 // Recomended by lecturer
-void OLED_reset( void );
-
-void OLED_home( void );
 
 void OLED_goto_column ( uint8_t column );
 
@@ -40,9 +37,10 @@ void OLED_write_char( char c );
 
 void OLED_print( char* string );
 
-void OLED_set_brightness(uint8_t lvl );// Drawing functionsvoid OLED_print_arrow ( uint8_t page, uint8_t column );
+// Drawing functions
+void OLED_print_arrow ( uint8_t page, uint8_t column );
 
-void OLED_print_penis ( uint8_t page, uint8_t column );
+void OLED_print_rounded_arrow ( uint8_t page, uint8_t column );
 
 
 #endif /* OLEDDRIVER_H_ */

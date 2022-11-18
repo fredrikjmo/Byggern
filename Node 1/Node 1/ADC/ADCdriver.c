@@ -27,7 +27,6 @@ uint8_t adc_read ( uint8_t channel ){
 	
 	while((PIND & 1<<PIND4) == 0 ){}// While BUSY is low, spin here
 
-	//_delay_ms(100);
 	volatile char * ext_mem = ( char *) 0x1400 ;
 	uint8_t ch_0 = ext_mem [ 0 ];
 	uint8_t ch_1 = ext_mem [ 0 ];
@@ -116,8 +115,16 @@ direction adc_direction_read (void){
 
 
 
-uint8_t adc_pos_left_slider(void){	uint8_t L_slider = adc_read(2);	return 100*L_slider/255;}uint8_t adc_pos_right_slider(void){
+uint8_t adc_pos_left_slider(void){
 
-	uint8_t R_slider = adc_read(3);
+	uint8_t L_slider = adc_read(2);
+
+	return 100*L_slider/255;
+}
+
+uint8_t adc_pos_right_slider(void){
+
+	uint8_t R_slider = adc_read(3);
+
 	return 100*R_slider/255;
 }

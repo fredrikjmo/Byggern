@@ -100,22 +100,21 @@ void mainmenu( void ){
 	while (1)
 	{
 		adc_calibrate();
-		
 		uint8_t btn_val = button_right_read();
 		direction dir = adc_direction_read();
 
 		if(dir == down){
 				OLED_clear_area(currentNode->index,4,17);
 				currentNode = currentNode->next;
-				OLED_print_penis(currentNode->index,4);
+				OLED_print_rounded_arrow(currentNode->index,4);
 			}
 
 		if ( dir == up ){
 				OLED_clear_area(currentNode->index,4,17);
 				currentNode = currentNode->prev;
-				OLED_print_penis(currentNode->index,4);
+				OLED_print_rounded_arrow(currentNode->index,4);
 			}
-			
+
 		if (btn_val == 1 && currentNode == &FirstChild)
 		{
 			mainmenu_play_game();

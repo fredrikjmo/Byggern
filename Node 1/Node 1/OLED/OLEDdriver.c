@@ -41,7 +41,6 @@ void OLED_init( void )
 void OLED_write_command( uint8_t command ){
 	volatile char * ext_mem = ( char *) OLED_COMMAND_BASE;
 	ext_mem [ 0 ]= command ;
-
 }
 
 void OLED_write_data ( uint8_t data ){
@@ -49,17 +48,8 @@ void OLED_write_data ( uint8_t data ){
 	ext_mem [ 0 ]= data ;
 }
 
-void OLED_reset( void ){
-	
-}
-
-void OLED_home( void ){
-	
-}
-
 void OLED_goto_page( uint8_t page ){
 	OLED_write_command( 0xB0 + page ); // Set page
-	
 }
 
 void OLED_clear_page( uint8_t page ){
@@ -94,22 +84,15 @@ void OLED_goto_pos( uint8_t page, uint8_t column ){
 
 
 void OLED_write_char( char c ){
-	
 	for (uint8_t i = 0; i < 8; i++){
 		OLED_write_data(pgm_read_byte(&(font8[c-32][i])));
 	}
-	
 }
 	
 void OLED_print( char* string ){
 	for ( int i = 0 ; i < strlen(string) ; i++ ){
 		OLED_write_char(string[i]);
 	}
-	
-}
-
-void OLED_set_brightness(uint8_t lvl ){
-	
 }
 
 void OLED_print_arrow( uint8_t page, uint8_t column ){
@@ -123,7 +106,7 @@ void OLED_print_arrow( uint8_t page, uint8_t column ){
 }
 
 
-void OLED_print_penis( uint8_t page, uint8_t column ){
+void OLED_print_rounded_arrow( uint8_t page, uint8_t column ){
 	OLED_goto_pos( page , column );
 	OLED_write_data ( 0b01100110 );
 	OLED_write_data ( 0b11111111 );
@@ -139,4 +122,4 @@ void OLED_print_penis( uint8_t page, uint8_t column ){
 	OLED_write_data ( 0b00011000 );
 }
 
-
+
