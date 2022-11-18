@@ -43,6 +43,9 @@ uint8_t CAN_receive ( void )
 	{
 		message.data[i] = MCP2515_read(MCP_RXB0D0 + i);
 	}
+
+	//clear interrupt flags RX0
+	mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF, 0);
 	
 	return message;
 }
@@ -57,5 +60,4 @@ void CAN_send_joystick_direction (void){
 	message.data[0] = joystick_dir;
 
 	CAN_transmit(message);
-	
 }

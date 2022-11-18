@@ -39,11 +39,11 @@ uint8_t  MCP2515_init(void)
 	//set length of propagation segment to 2*TQ
 	MCP2515_bit_modify(MCP_CNF3,0b00000111,0x02);
 
-	//Enabling interrupts
-	//set all TX-interrupt 
-	MCP2515_bit_modify(MCP_CANINTE, MCP_TX_MASK, MCP_TX_INT);
 	//set all RX-interrupts
 	MCP2515_bit_modify(MCP_CANINTE, MCP_RX_INT, MCP_RX_INT);
+
+	//clear all interrupt flags
+	mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF, 0);
 	
 	// enable receive
 	MCP2515_bit_modify(MCP_RXB0CTRL, 0b01100000 ,0b01100000 );
