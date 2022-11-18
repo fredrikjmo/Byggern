@@ -47,14 +47,9 @@ int main(void)
     while (1) 
     {	
 		motor_pid_controlled();
-		if(goal()){
-			CAN_MESSAGE* message;
-			message->data[0] = 1;
-			message->data_length = 1;
-			message->id = 1;
-			//can_send(message,0);}
-	}
+		//if(goal()){
 			//printf("Hey, you lost!\n\r");
-		//}else {printf("Still playing\n\r");}
-    }
+			//}
+		//else {printf("Still playing\n\r");}
+		}
 }
