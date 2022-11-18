@@ -42,7 +42,7 @@ uint8_t  MCP2515_init(void)
 	//set all RX-interrupts
 	MCP2515_bit_modify(MCP_CANINTE, MCP_RX_INT, MCP_RX_INT);
 
-	//clear all interrupt flags
+	//clear interrupt flags RX0
 	mcp2515_bit_modify(MCP_CANINTF, MCP_RX0IF, 0);
 	
 	// enable receive

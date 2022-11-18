@@ -16,6 +16,7 @@ void mainmenu_back (Node* currentNode){
 		currentNode = currentNode->parent;
 }
 
+
 void mainmenu_print_current_menu ( Node* currentNode){
 	uint8_t index = currentNode->index;
 	OLED_clear_screen();
@@ -29,8 +30,6 @@ void mainmenu_print_current_menu ( Node* currentNode){
 			break;
 	}
 }
-
-
 
 void mainmenu_play_game(){
 	OLED_clear_screen();
@@ -60,7 +59,6 @@ void mainmenu( void ){
 	Node MainNode;
 
 	// Initialize child-nodes
-
 	Node FirstChild;
 	Node SecondChild;
 	Node ThirdChild;
@@ -85,7 +83,6 @@ void mainmenu( void ){
 	ThirdChild.parent = &MainNode;
 	ThirdChild.index = 2;
 	FirstChild.nodeFunction = NULL;
-
 
 	//Initialize MainMenu-node
 	
