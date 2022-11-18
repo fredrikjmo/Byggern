@@ -132,10 +132,6 @@ void motor_set_speed(uint32_t percentage){
 
 
 void joystick_horizontal_to_speed(uint32_t joystick_output){
-	
-	//if((joystick_output > 45) && (joystick_output < 55)){
-		//motor_set_speed(0);
-	//};
 
 	if(joystick_output > 55){
 		motor_set_direction(1);
@@ -146,17 +142,4 @@ void joystick_horizontal_to_speed(uint32_t joystick_output){
 		motor_set_direction(0);
 		motor_set_speed(joystick_output);
 	};
-}
-
-
-void motor_raw_dog(void){
-	if (right_slider_val >= 50){
-		motor_set_direction(1);
-		motor_set_speed((right_slider_val - 50)*2);
-		return;
-	}
-	motor_set_direction(0);
-	motor_set_speed((50 - right_slider_val)*2);
-	return;
-	
 }
