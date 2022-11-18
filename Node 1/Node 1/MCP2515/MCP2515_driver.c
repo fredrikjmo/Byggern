@@ -16,11 +16,18 @@
 uint8_t  MCP2515_init(void)
 {	
 	sei(); // Set Global Interrupt Enable bit
+	DDRD &= ~(1 << PD2);
+	MCUCR |= (1 << ISC01);
+    MCUCR &= ~(1 << ISC00);
+
 	GICR |= ( 1 << INT0 ); // Set external interrupt request 0 Enable	
 	
 	uint8_t value = 0;
 	SPI_MasterInit (); // Initialize SPI
 	MCP2515_reset (); // Send reset - command
+	
+
+
 	
 	// Self - test
 	value = MCP2515_read ( MCP_CANSTAT );

@@ -16,7 +16,7 @@ ISR(INT0_vect)
 	volatile uint8_t interrupt_value;
 	interrupt_value = MCP2515_read( MCP_CANINTF );
 	MCP_val_read = CAN_receive();
-	MCP2515_bit_modify(MCP_CANINTF, 0xFF, 0x00);
+	MCP2515_bit_modify(MCP_CANINTF, MCP_RX0IF, 0);
 }
 
 CAN_MESSAGE get_MCP_val_read( void ) {return MCP_val_read;}
