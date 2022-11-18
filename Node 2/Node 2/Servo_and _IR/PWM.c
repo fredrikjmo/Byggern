@@ -22,10 +22,6 @@ void PWM_init(void){
 	//PWM peripheral select
 	PIOC->PIO_ABSR |= PIO_ABSR_P19;
 	PIOC->PIO_ABSR |= PIO_ABSR_P18;
-	
-
-	
-	//Set PWM Clk = MCK = 84 Mhz
 	 
 	 
 	//set channel mode
@@ -33,8 +29,6 @@ void PWM_init(void){
 	REG_PWM_CMR5 |= PWM_CMR_CPRE_MCK_DIV_128;
 	REG_PWM_CMR6 |= PWM_CMR_CPRE_MCK_DIV_128;
 	
-
-
 	//Set Period = CPRD/21 Mhz
 	// CPRD = 0x3345 => T=20 ms
 	REG_PWM_CPRD5 |= 0x3345;

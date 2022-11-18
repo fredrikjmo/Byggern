@@ -14,9 +14,9 @@ void button_init(void){
 }
 void set_button (uint8_t val){
 	if(val){
-		PIOC->PIO_CODR = PIO_SODR_P12; // push shit
+		PIOC->PIO_CODR = PIO_SODR_P12; // set btn value 
 		
 	} else {
-		PIOC->PIO_SODR = PIO_SODR_P12; // don't push shit
+		PIOC->PIO_SODR = PIO_SODR_P12; // clear btn value 
 	}
 }

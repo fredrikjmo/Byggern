@@ -39,26 +39,17 @@ int main(void)
 	
 	WDT->WDT_MR = WDT_MR_WDDIS; // Disable WDT
 	
+	//Turn on LEDs to indicate succesfull flash 
 	PIOA->PIO_OER = PIO_OER_P19 | PIO_OER_P20; // Output enable on PA19 and PA20
-
-	
 	PIOA->PIO_SODR = PIO_SODR_P19; // | PIO_SODR_P20; // Set PA19 and PA20 high ( Turn on both leds ) 
-	//motor_set_direction(1);
+
 	motor_disable_break(1);
-    /* Replace with your application code */
-	//motor_encoder_reset();
     while (1) 
     {	
-		//motor_raw_dog();
 		motor_pid_controlled();
-		if(goal()){
-			CAN_MESSAGE* message;
-			message->data[0] = 1;
-			message->data_length = 1;
-			message->id = 1;
-			//can_send(message,0);}
-	}
+		//if(goal()){
 			//printf("Hey, you lost!\n\r");
-		//}else {printf("Still playing\n\r");}
-    }
+			//}
+		//else {printf("Still playing\n\r");}
+		}
 }
