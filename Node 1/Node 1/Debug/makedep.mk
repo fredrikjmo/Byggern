@@ -16,8 +16,6 @@ MCP2515\MCP2515_driver.c
 
 menu\mainmenu.c
 
-menu\node.c
-
 OLED\OLEDdriver.c
 
 SPI\SPI_driver.c

@@ -23,6 +23,4 @@ typedef struct Node {
 	functionPtr nodeFunction;
 } Node;
 
-
-
 #endif /* NODE_H_ */

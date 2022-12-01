@@ -178,9 +178,6 @@
     <Compile Include="menu\mainmenu.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="menu\node.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="menu\node.h">
       <SubType>compile</SubType>
     </Compile>

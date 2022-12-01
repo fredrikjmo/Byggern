@@ -14,11 +14,20 @@
 #include "../ADC/ADCdriver.h"
 
 
-void CAN_transmit ( uint8_t IDH, uint8_t IDL, uint8_t data1, uint8_t data2, uint8_t data3 );
+typedef struct can_message_t
+{
+	uint16_t id;
+	char data_length;
+	char data[8];
+} CAN_MESSAGE;
 
-uint8_t CAN_receive ( void );
+void CAN_transmit ( CAN_MESSAGE message );
+
+CAN_MESSAGE CAN_receive ( void );
 
 void CAN_send_joystick_direction (void);
+
+CAN_MESSAGE get_MCP_val_read( void );
 
 
 #endif /* CANDRIVER_H_ */

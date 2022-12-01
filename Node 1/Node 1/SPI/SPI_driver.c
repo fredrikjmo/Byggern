@@ -10,12 +10,10 @@
 
 void SPI_MasterInit(void)
 {	
-	
 	/* Set MOSI, SCK, *SS as output, all others input */
 	DDRB |= (1<<DDB5)|(1<<DDB7)|(1<<DDB4);
 	/* Enable SPI, Master, set clock rate fck/16 */
 	SPCR |= (1<<SPE)|(1<<MSTR)|(1<<SPR0);
-	
 	//set MISO to input
 	DDRB &= ~(1<<DDB6);	
 }
@@ -35,6 +33,4 @@ uint8_t SPI_read(void)
 	SPI_write(0xF);
 	
 	return SPDR;
-
 }
-

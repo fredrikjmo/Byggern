@@ -53,8 +53,6 @@ void motor_pid_controlled(void);
 void motor_encoder_reset(void);
 uint16_t motor_encoder_read(void);
 
-void motor_raw_dog(void);
-
 void DAC_init(void);
 void joystick_horizontal_to_speed(uint32_t joystick_output);
 

@@ -13,7 +13,12 @@ void interface_joystick_direction_to_CAN (void){
 	
 	direction joystick_dir = adc_direction_read();
 	
-	CAN_transmit(0xFF, 0x0F, joystick_dir, 0x0, 0x0);
+	CAN_MESSAGE message;
+	message.data[0] = joystick_dir;
+	message.data_length = 1;
+	message.id = 0xFF0F;
+	
+	CAN_transmit(message);
 	
 }
 
@@ -24,7 +29,13 @@ void interface_joystick_horizontal_percentage_to_CAN (void){
 	
 	uint8_t PWM_percentage = (posistion_percentage.x_axis + 100)/2;
 
-	CAN_transmit(0xFF, 0x0F, PWM_percentage, 0x0, 0x0);
+	CAN_MESSAGE message;
+	message.data[0] = PWM_percentage;
+	message.data_length = 1;
+	message.id = 0xFF0F;
+		
+
+	CAN_transmit(message);
 	
 }
 void interface_send_MFB_data_to_CAN (void){
@@ -35,5 +46,13 @@ void interface_send_MFB_data_to_CAN (void){
 	uint8_t right_slider_posistion_percentage = adc_pos_right_slider();
 	
 	uint8_t right_button_val = button_right_read();
-	CAN_transmit(0xFF, 0x0F, joystick_PWM_percentage, right_slider_posistion_percentage, right_button_val);
+	
+	CAN_MESSAGE message;
+	message.data[0] = joystick_PWM_percentage;
+	message.data[1] = right_slider_posistion_percentage;
+	message.data[2] = right_button_val;
+	message.data_length = 3;
+	message.id = 0xFF0F;
+	
+	CAN_transmit(message);
 }
